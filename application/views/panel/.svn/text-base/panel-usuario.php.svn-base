@@ -1,0 +1,130 @@
+<!-- Plugins -->
+	<!-- Important -->
+	<script src="<?=base_url()?>resources/js/prefixfree.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	
+</head>
+<body>
+<? $this->load->view('core/core_menu') ?>
+
+<section id="Main">
+<div class="areaListados auto_margin">
+<div class="row">
+	
+    
+    <? $this->load->view('panel/panel_menu') ?>
+    
+	<div class="col-sm-10">
+	<div class="conttPanel">
+		
+		<? $this->load->view('panel/panel_header') ?>
+
+		<div class="Bloques"> 
+		<h3 class="Title">Area Tablas Listados</h3>
+		<div class="bs-example">
+		    <table class="table table-hover">
+		      <thead>
+		        <tr>
+		          <th>#</th>
+		          <th>First Name</th>
+		          <th>Last Name</th>
+		          <th>Username</th>
+		        </tr>
+		      </thead>
+		      <tbody>
+		        <tr>
+		          <td>1</td>
+		          <td>Mark</td>
+		          <td>Otto</td>
+		          <td>@mdo</td>
+		        </tr>
+		        <tr>
+		          <td>2</td>
+		          <td>Jacob</td>
+		          <td>Thornton</td>
+		          <td>@fat</td>
+		        </tr>
+		        <tr>
+		          <td>3</td>
+		          <td colspan="2">Larry the Bird</td>
+		          <td>@twitter</td>
+		        </tr>
+		      </tbody>
+		    </table>
+		  </div><!-- /example -->		
+		 </div>
+		 
+		 
+		 <div class="Bloques"> 
+		<h3 class="Title">Area Formularios</h3>
+		<div class="sareaForm">
+			<div class="row">
+			  <div class="col-xs-6">
+			  	<span class="ilab">Field Label:</span>
+			    <input type="text" class="form-control" disabled placeholder="Carlos Alberto">
+			  </div>
+			  <div class="col-xs-6">
+			  	<span class="ilab">Field Label:</span>
+			    <input type="text" class="form-control" disabled placeholder="Lopez rodriguez">
+			  </div>
+			  <div class="col-xs-4">
+			  	<span class="ilab">Field Label:</span>
+			    <input type="text" class="form-control" placeholder=".col-xs-4">
+			  </div>
+			  <div class="col-xs-4">
+			  	<span class="ilab">Field Label:</span>
+			    <input type="text" class="form-control" placeholder=".col-xs-4">
+			  </div>
+			  <div class="col-xs-4">
+			  	<span class="ilab">Field Label:</span>
+			    <input type="text" class="form-control" placeholder=".col-xs-4">
+			  </div>
+			  <div class="col-xs-12">
+			  	<span class="ilab">Field Label:</span>
+			    <textarea class="form-control" rows="3"></textarea>
+			  </div>
+			  <div class="col-xs-12">
+			  <span class="btt-label">
+			 <button type="button" class="btn btn-primary btn-lg active">Guardar</button>
+			 <button type="button" class="btn btn-default btn-lg active">Editar</button>
+			 
+			  </span>
+			  </div>
+			 </div>
+		</div>
+		</div>
+		
+		<div class="Bloques">
+		<h3 class="Title">Area Listados preguntas</h3>	
+		<div class="areaComments2">
+		  <ul style="margin: 0; padding: 0;">
+		 	<li>
+		 	<div class="item">
+		 		<div class="ddt1">
+		 		<div class="dataItem">Lorem Ipsum | <span class="price">$1.900.000</span></div>
+		 		<span class="name arrow_box">Juan Carlos Maritnez</span>
+		 		<strong>PREGUNTA</strong> / <span class="date">06-MAY-2014</span></div>
+		 		 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</p>
+		 		 <button type="button" class="btn btn-warning btn-xs">responder</button>
+		 	</div>
+		 	</li>
+		 	<li><div class="item">
+		 		<div class="ddt1">
+		 		<div class="dataItem">Lorem Ipsum | <span class="price">$1.900.000</span></div>
+		 		<span class="name arrow_box">Juan Carlos Maritnez</span> <strong>PREGUNTA</strong> / <span class="date">06-MAY-2014</span></div>
+		 		<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</p>
+		 		<button type="button" class="btn btn-warning btn-xs">responder</button>
+		 	</div>
+		 	</li>
+		 </ul>
+		
+		</div>	
+		</div>  		
+	</div>	
+	</div>
+	</div>
+	</div>
+</section>
+

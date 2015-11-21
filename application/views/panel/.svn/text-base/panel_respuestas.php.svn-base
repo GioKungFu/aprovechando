@@ -1,0 +1,146 @@
+<!-- GENEALOGIA PLUGIN -->
+<link rel="stylesheet" href="<?=base_url()?>resources/css/jquery.jOrgChart.css"/>
+<link rel="stylesheet" href="<?=base_url()?>resources/css/preguntas.css"/>
+
+<script src="<?=base_url()?>resources/js/jquery.validate.min.js"></script>
+<!-- imagesLoaded 
+<script src="<?=base_url()?>resources/js/jquery.imagesloaded.min.js"></script>
+-->	
+<!-- Custom file upload -->
+<script src="<?=base_url()?>resources/js/bootstrap-fileupload.js"></script>
+
+<script src="<?=base_url()?>resources/js/ckeditor.js"></script>
+
+<!-- GENEALOGIA PLUGIN -->
+
+</head>
+<body>
+<? $this->load->view('core/core_menu') ?>
+
+<section id="Main">
+<div class="areaListados auto_margin">
+			  
+
+<div class="row">
+	
+    <? $this->load->view('panel/panel_menu') ?>
+    
+	<div class="col-sm-10">
+	<div class="conttPanel">
+		
+    	<? $this->load->view('panel/panel_header') ?>
+		 
+		<div class="Bloques"> 
+		<h3 class="Title">Preguntas (<?=$preguntas_recientes?>)</h3>
+		
+        <div class="sareaForm">
+			<div class="row">
+			  
+			 
+              <div class="col-xs-12">
+               
+    			
+<section class="areaComments col-xs-12">
+	 <span class="tt">PREGUNTAS AL VENDEDOR</span>
+	<div class="commForm">
+
+                
+                 <?php 
+		foreach($pregunta as $row){
+		?>
+        <ul>
+	 	<li>
+	 	<div class="item">
+	 		<div class="ddt1"><strong>PREGUNTA</strong> / <span class="date"><?=$row['fecha']?></span></div>
+	 		<?=$row['pregunta']?>	 	</div>
+         <?
+		$respuestas = $this -> preguntas_model ->obtenerRespuestas($row['id_pregunta']);
+		 foreach($respuestas as $row2){
+			 
+		 ?>
+	 	 <ul>
+	 	 	<li>
+	 	 	<div class="item">
+	 	 		<div class="ddt1"><strong>RESPUESTA</strong> / <span class="date"><?=$row2['fecha']?></span></div>
+	 	 		<?=$row2['respuesta']?>
+	 	 	</div>
+	 	 	</li>
+	 	 	
+	 	 </ul>
+         <? } ?>
+	 	</li>
+	 	
+	 </ul>
+	 <?php 
+		}
+		?>
+            <?php
+				$attributes = array('name'     => 'formulario',
+					'id' => 'form-validate',
+   					'method'   => 'post');
+
+		echo form_open('/equino/respuesta',$attributes);
+		echo form_hidden('id_pregunta',$pregunta[0]['id_pregunta']);
+				?>
+		<textarea class="inp-text" name="respuesta" rows="2" placeholder="Escribe tu respuesta"></textarea>
+		<input type="submit" name="" value="Respondekr" class="bttSend"  />
+	</div>
+	 
+	 
+      
+	</section>
+
+
+    <!-- cierre listado -->
+    
+              </div>
+              
+             
+                   
+				
+              	</div>
+                
+			  </div>
+                      
+
+			  	             	
+             
+			</div>
+        </div>
+		
+        </div>
+		
+		  		
+	</div>	
+	</div>
+
+</div>
+
+
+
+
+</div>
+</section>
+
+<script language="javascript" type="text/javascript" src="<?=base_url()?>resources/js/jquery.price_format.js" ></script>
+
+<script>
+<!-- 
+var nav4 = window.Event ? true : false; 
+function acceptNum(evt){  
+	// NOTE: Backspace = 8, Enter = 13, '0' = 48, '9' = 57  
+	var key = nav4 ? evt.which : evt.keyCode;  
+	return (key <= 13 || (key >= 48 && key <= 57) || key==44); 
+} 
+
+jQuery(document).ready(function() {
+ 	
+	$('#precio').priceFormat({
+		prefix: '',
+		centsSeparator: '',
+		thousandsSeparator: '',
+		centsLimit: 0
+	 }); 
+
+});
+</script>

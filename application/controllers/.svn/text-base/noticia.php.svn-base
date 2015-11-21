@@ -1,0 +1,42 @@
+<?php
+
+class Noticia extends CI_Controller {
+
+	function __construct()
+	{
+		parent::__construct();
+		$this->load->library('session');
+		$this->load->helper('url');
+		$this->load->helper('cookie');
+		//$this->load->model('core/vendedor_model');
+		
+	}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+	function lista()
+	{
+		
+			
+			$this->load->view('core/core_inicio');
+			$this->load->view('core/noticias');
+			$this->load->view('core/core_fin');
+	
+	}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+	function detalles()
+	{
+		
+			
+			$this->load->view('core/core_inicio');
+			$this->load->view('core/noticia');
+			$this->load->view('core/core_fin');
+	
+	}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+	
+
+}

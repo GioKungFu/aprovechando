@@ -1,0 +1,495 @@
+<!-- GENEALOGIA PLUGIN -->
+<link rel="stylesheet" href="<?=base_url()?>resources/css/jquery.jOrgChart.css"/>
+
+<script src="<?=base_url()?>resources/js/jquery.validate.min.js"></script>
+<!-- imagesLoaded 
+<script src="<?=base_url()?>resources/js/jquery.imagesloaded.min.js"></script>
+-->	
+<!-- Custom file upload -->
+<script src="<?=base_url()?>resources/js/bootstrap-fileupload.js"></script>
+
+<script src="<?=base_url()?>resources/js/ckeditor.js"></script>
+
+<script type="text/javascript">
+
+jQuery(document).ready(function(){
+
+	// utilizamos la función post, para hacer una llamada AJAX
+	$.post("<?=site_url()?>/core/main/obtenerDepartamento", { idPais:52 }, 
+    function(html){ $('#departamento').append(html); $('#departamento_nacimiento').append(html); } );
+	
+	$("#departamento").change(function() {
+		//Limpiamos el select de municipios
+		$('#municipio').html('');
+		// utilizamos la función post, para hacer una llamada AJAX
+		$.post("<?=site_url()?>/core/main/obtenerMunicipio", { idDepartamento : $(this).val() }, 
+		function(html){ $('#municipio').append(html); } );
+
+    });
+	
+	
+	$("#departamento_nacimiento").change(function() {
+		//Limpiamos el select de municipios
+		$('#municipio_nacimiento').html('');
+		// utilizamos la función post, para hacer una llamada AJAX
+		$.post("<?=site_url()?>/core/main/obtenerMunicipio", { idDepartamento : $(this).val() }, 
+		function(html){ $('#municipio_nacimiento').append(html); } );
+
+    });
+	
+ });
+</script>
+
+<!-- GENEALOGIA PLUGIN -->
+<script type="text/javascript" src="<?=base_url()?>resources/js/jquery.jOrgChart.js"></script>
+<script>
+jQuery(document).ready(function() {
+    $("#org").jOrgChart({
+        chartElement : '#chart',
+        dragAndDrop  : false
+    });
+});
+</script>
+
+</head>
+<body>
+<? $this->load->view('core/core_menu') ?>
+
+<section id="Main">
+<div class="areaListados auto_margin">
+            <?
+			  $attributes = array('name'    => 'formulario',
+								  'id' 	    => 'form-validate',
+								  'method'  => 'post');
+
+			  echo form_open_multipart('/equino/editar_equino/',$attributes);
+			?>
+			  
+
+<div class="row">
+	
+    <? $this->load->view('panel/panel_menu') ?>
+    
+	<div class="col-sm-10">
+	<div class="conttPanel">
+		
+    	<? $this->load->view('panel/panel_header') ?>
+		 
+		<div class="Bloques"> 
+		<h3 class="Title">Publique y venda su equino facilmente</h3>
+		
+        <div class="sareaForm">
+			<div class="row">
+			  <span class="ilab">Venta de servicio reproductivo (semen o embrión) :</span>
+			  
+              <input type="hidden" name="id_equino" value="<?= nvl($equino['id_equino']) ?>" >
+              <div class="col-xs-12">
+                  <div class="col-xs-2">
+                  <span class="ilab">Si </span>
+                        <input type="radio"  name="equi[reproductor]" value="Si" <?= (nvl($equino['reproductor']) == 'Si')? 'checked' : '' ?> >
+                  </div>
+    
+                  <div class="col-xs-2">
+                  <span class="ilab">No</span>
+                        <input type="radio" <?= ((nvl($equino['reproductor']) == 'No') || (!isset($equino['reproductor'])) )? 'checked' : '' ?>  name="equi[reproductor]" value="No" >
+                  </div>
+                  
+                    <div class="alert alert-warning alert-dismissible" role="alert">
+                      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+                      <strong>Importante!</strong> Si selecciona esta opción, su equino solo será visible en la sección de reproductores.
+                    </div>
+			  </div>
+              
+              <br>
+              <div class="col-xs-6">
+			  	<span class="ilab">Nombre del Equino:</span>
+			    	<input type="text" value="<?= nvl($equino['nombre']) ?>" class="form-control" placeholder=" " name="equi[nombre]" id="nombre" required>
+			  </div>
+			  
+              <div class="col-xs-4">
+			  	<span class="ilab">Raza:</span>
+			        <select name="equi[raza]" id="raza"  class="form-control" required>
+                         <option value="Caballo Criollo Colombiano" <?= (nvl($equino['raza']) == 'Caballo Criollo Colombiano')? 'selected="selected"' : '' ?> >Caballo Criollo Colombiano</option>
+                         <option value="Pony" <?= (nvl($equino['raza']) == 'Pony')? 'selected="selected"' : '' ?>>Pony</option>
+                         <option value="Mini Horse" <?= (nvl($equino['raza']) == 'Mini Horse')? 'selected="selected"' : '' ?>>Mini Horse</option>
+                         <option value="Pinto Americano" <?= (nvl($equino['raza']) == 'Pinto Americano')? 'selected' : '' ?>>Pinto Americano</option>
+                         <option value="Cuarto de Milla" <?= (nvl($equino['raza']) == 'Cuarto de milla')? 'selected="selected"' : '' ?>>Cuarto de Milla</option>
+                         <option value="Apalussa" <?= (nvl($equino['raza']) == 'Apalussa')? 'selected="selected"' : '' ?>>Apalussa</option>
+                         <option value="Percherón" <?= (nvl($equino['raza']) == 'Percherón')? 'selected="selected"' : '' ?>>Percherón</option>
+                         <option value="Frisón" <?= (nvl($equino['raza']) == 'Frisón')? 'selected="selected"' : '' ?>>Frisón</option>
+                         <option value="Árabe" <?= (nvl($equino['raza']) == 'Árabe')? 'selected="selected"' : '' ?>>Árabe</option>
+                    </select>
+			  </div>
+              
+			  <div class="col-xs-2">
+			  	<span class="ilab">Sexo:</span>
+			        <select name="equi[sexo]" id="sexo"  class="form-control" required >
+                         <option value=""  <?= (nvl($equino['sexo']) == '')? 'selected="selected"' : '' ?> >-Seleccione uno-</option>
+                         <option value="Macho" <?= (nvl($equino['sexo']) == 'Macho')? 'selected="selected"' : '' ?>>Macho</option>
+                         <option value="Hembra" <?= (nvl($equino['sexo']) == 'Hembra')? 'selected="selected"' : '' ?>>Hembra</option>
+                         <option value="Castrado" <?= (nvl($equino['sexo']) == 'Castrado')? 'selected="selected"' : '' ?>>Castrado</option>
+                    </select>
+			  </div>
+              
+			  <div class="col-xs-4">
+			  	<span class="ilab">Color:</span>
+			    	<select name="equi[color]" id="andar"  class="form-control" >
+                         <option value="" <?= (nvl($equino['color']) == '')? 'selected="selected"' : '' ?> >-Seleccione uno-</option>
+                         <option value="Castaño" <?= (nvl($equino['color']) == 'Castaño')? 'selected="selected"' : '' ?>>Castaño</option>
+                         <option value="Zaino" <?= (nvl($equino['color']) == 'Zaino')? 'selected="selected"' : '' ?>>Zaino</option>
+                         <option value="Moro" <?= (nvl($equino['color']) == 'Moro')? 'selected="selected"' : '' ?>>Moro</option>
+                         <option value="Bayo" <?= (nvl($equino['color']) == 'Bayo')? 'selected="selected"' : '' ?>>Bayo</option>
+                         <option value="Cervuno" <?= (nvl($equino['color']) == 'Cervuno')? 'selected="selected"' : '' ?>>Cervuno</option>
+                         <option value="Alazán" <?= (nvl($equino['color']) == 'Alazán')? 'selected="selected"' : '' ?>>Alazán</option>
+                         <option value="Isabelino" <?= (nvl($equino['color']) == 'Isabelino')? 'selected="selected"' : '' ?>>Isabelino</option>
+                         <option value="Otro" <?= (nvl($equino['color']) == 'Otro')? 'selected="selected"' : '' ?>>Otro</option>
+                    </select>     
+			  </div>
+               <div class="col-xs-4">
+			  	<span class="ilab">Andar:</span>
+			        <select name="equi[andar]" id="andar"  class="form-control" >
+                         <option value="" <?= (nvl($equino['andar']) == '')? 'selected="selected"' : '' ?> >-Seleccione uno-</option>
+                         <option value="Trote y Galope (P1)" <?= (nvl($equino['andar']) == 'Trote y Galope (P1)')? 'selected="selected"' : '' ?> >Trote y Galope (P1)</option>
+                         <option value="Trocha y Galope (P2)" <?= (nvl($equino['andar']) == 'Trocha y Galope (P2)')? 'selected="selected"' : '' ?> >Trocha y Galope (P2)</option>
+                         <option value="Trocha (P3)" <?= (nvl($equino['andar']) == 'Trocha (P3)')? 'selected="selected"' : '' ?> >Trocha (P3)</option>
+                         <option value="Paso Fino (P4)" <?= (nvl($equino['andar']) == 'Paso Fino (P4)')? 'selected="selected"' : '' ?> >Paso Fino (P4)</option>
+                         <option value="Mulares y Asnales" <?= (nvl($equino['andar']) == 'Mulares y Asnales')? 'selected="selected"' : '' ?> >Mulares y Asnales</option>
+                    </select>
+			  </div>
+			  
+			  <div class="col-xs-4">
+			  	<span class="ilab">Precio:</span>
+			     	<input type="text" value="<?= nvl($equino['precio']) ?>" class="form-control" id="precio"  name="equi[precio]" required >
+			  </div>
+			  
+			  <div class="col-xs-8">
+			  	<span class="ilab">Refrencia Genética:</span>
+			     	<input type="text" value="<?= nvl($equino['referencia_genetica']) ?>" class="form-control" name="equi[referencia_genetica]" >
+			  </div>
+			  
+			  <div class="col-xs-4">
+			  	<span class="ilab">Alzada (en Mts):</span>
+			     	<input type="text" value="<?= nvl($equino['alzada']) ?>" class="form-control" name="equi[alzada]"  onKeyPress="return acceptNum(event)" >
+			  </div>
+			  
+			  <div class="col-xs-6">
+			  	<span class="ilab">Padre:</span>
+			     	<input type="text" value="<?= nvl($equino['padre']) ?>" class="form-control" name="equi[padre]" >
+			  </div>
+			  
+			  <div class="col-xs-6">
+			  	<span class="ilab">Madre:</span>
+			     	<input type="text" value="<?= nvl($equino['madre']) ?>" class="form-control" name="equi[madre]" >
+			  </div>
+             
+			  <div class="col-xs-4">
+			  	<span class="ilab">Edad (en años):</span>
+			    	<input type="text" class="form-control" value="<?= nvl($equino['edad']) ?>" placeholder=" " name="equi[edad]" id="edad" onKeyPress="return acceptNum(event)" >
+			  </div>
+             
+			  <div class="col-xs-4">
+			  	<span class="ilab">Nº de Microchip:</span>
+			    	<input type="text" class="form-control" value="<?= nvl($equino['n_microchip']) ?>" placeholder=" " name="equi[n_microchip]" >
+			  </div>
+             
+			  <div class="col-xs-4">
+			  	<span class="ilab">Nº de Registro:</span>
+			    	<input type="text" class="form-control" value="<?= nvl($equino['n_registro']) ?>" placeholder=" " name="equi[n_registro]" >
+			  </div>
+               
+              <div class="col-xs-12">
+                <span class="ilab">Lugar de nacimiento</span>
+               </div>
+              
+			  <div class="col-xs-4">
+			  	<span class="ilab">País:</span>
+			        <select name="pais_nacimiento" id="sexo"  class="form-control" required >
+                         <option value="Colombia" selected="selected" >Colombia</option>
+                    </select>
+			  </div>
+              
+              <div class="col-xs-4">
+                <span class="ilab">Departamento:</span>
+               <div id="div_lista_departamentos_nacimiento"></div>
+                <select name="departamento_nacimiento" id="departamento_nacimiento" class="form-control">
+                    <option value="0" selected="selected" >-Seleccione uno-</option>
+                </select>
+              </div>
+              
+              <div class="col-xs-4">
+                <span class="ilab">Ciudad:</span>
+                <select name="equi[id_ciudad_nacimiento]" class="form-control" id="municipio_nacimiento" placeholder="">
+                </select>
+              </div>
+              
+              <div class="col-xs-12">
+                <span class="ilab">Ubicación actual del equino</span>
+               </div>
+              
+			  <div class="col-xs-4">
+			  	<span class="ilab">País:</span>
+			        <select name="pais" id="pais"  class="form-control" required >
+                         <option value="Colombia" selected="selected" >Colombia</option>
+                    </select>
+			  </div>
+              
+              <div class="col-xs-4">
+                <span class="ilab">Departamento:</span>
+               <div id="div_lista_departamentos"></div>
+                <select name="equi[id_departamento]" id="departamento" class="form-control">
+                    <option value="0" selected="selected" >-Seleccione uno-</option>
+                </select>
+              </div>
+              
+              <div class="col-xs-4">
+                <span class="ilab">Ciudad:</span>
+                <select name="equi[id_ciudad]" class="form-control" id="municipio" placeholder="">
+                </select>
+              </div>
+             
+			  <div class="col-xs-12">
+			  	<span class="ilab">Video ( Ingrese un link de youtube.com, ejemplo : https://www.youtube.com/watch?v=TbZu8TDX9Mo ):</span>
+			    	<input type="text" class="form-control" placeholder=" " value="<?= nvl($equino['video']) ?>" name="equi[video]" >
+			  </div>
+          
+			  <div class="col-xs-12">
+			  	<span class="ilab">Describa su equino:</span>
+			    	<textarea class="form-control ckeditor" cols="10" id="editor1" rows="5" name="equi[descripcion]" ><?= nvl($equino['descripcion']) ?></textarea>
+			  </div>
+              
+               <p>&nbsp;  </p>
+              <h4 class="Title" style="padding-top:10px;" >Agregue imágenes</h4>
+              <p>  </p>
+              
+			  <div class="col-xs-12">
+                <br>
+              	<div class="alert alert-info" role="alert">Puede usar hasta 6 fotos, la primera imágen es necesaria para mostrar su equino en los listados. <br><strong>Importante!</strong> Tenga en cuenta usar buenas fotos, le recomendamos una resolución minima de 800 pixeles de ancho por 600 pixeles de alto.</div>
+              </div>
+              
+              <div class="fileupload">   
+                         
+              <div class="col-xs-4" style="margin-bottom:30px; margin-top:10px">
+				
+              	<div class="fileupload fileupload-<?=(nvl($equino['imagen'])!='') ?'exists':'new'?>" data-provides="fileupload">
+                	
+                    <div class="fileupload-new thumbnail" style="width: 233px; height: 175px;"><img src="<?=base_url()?>resources/images/noimage.gif" />
+                    </div>
+                    <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 233px; max-height: 175px; line-height: 20px;"><?=(nvl($equino['imagen'])!='') ?'<img src="'.base_url().'uploads/equinos/m'.$equino['imagen'].'" />':''?>
+                    </div>
+                    
+                    <div>
+                        <span class="btn btn-file"><span class="fileupload-new">Seleccione una Imágen</span>
+                        <span class="fileupload-exists">Cambiar</span><input type="file" name='userfile1'  /></span>
+                        <span class="btn btn-danger  fileupload-exists btn-xs" data-dismiss="fileupload">Eliminar</span>
+                    </div>
+				
+              	</div>
+                
+			  </div>
+                         
+              <div class="col-xs-4" style="margin-bottom:30px; margin-top:10px">
+				
+              	<div class="fileupload fileupload-<?=(nvl($equino['imagen2'])!='') ?'exists':'new'?>" data-provides="fileupload">
+                	
+                    <div class="fileupload-new thumbnail" style="width: 233px; height: 175px;"><img src="<?=base_url()?>resources/images/noimage.gif" />
+                    </div>
+                    <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 233px; max-height: 175px; line-height: 20px;"><?=(nvl($equino['imagen2'])!='') ?'<img src="'.base_url().'uploads/equinos/m'.$equino['imagen2'].'" />':''?>
+                    </div>
+                    
+                    <div>
+                        <span class="btn btn-file"><span class="fileupload-new">Seleccione una Imágen</span>
+                        <span class="fileupload-exists">Cambiar</span><input type="file" name='userfile2'   /></span>
+                        <span class="btn btn-danger  fileupload-exists btn-xs" data-dismiss="fileupload">Eliminar</span>
+                    </div>
+				
+              	</div>
+                
+			  </div>
+                         
+              <div class="col-xs-4" style="margin-bottom:30px; margin-top:10px">
+				
+              	<div class="fileupload fileupload-<?=(nvl($equino['imagen3'])!='') ?'exists':'new'?>" data-provides="fileupload">
+                	
+                    <div class="fileupload-new thumbnail" style="width: 233px; height: 175px;"><img src="<?=base_url()?>resources/images/noimage.gif" />
+                    </div>
+                    <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 233px; max-height: 175px; line-height: 20px;"><?=(nvl($equino['imagen3'])!='') ?'<img src="'.base_url().'uploads/equinos/m'.$equino['imagen3'].'" />':''?>
+                    </div>
+                    
+                    <div>
+                        <span class="btn btn-file"><span class="fileupload-new">Seleccione una Imágen</span>
+                        <span class="fileupload-exists">Cambiar</span><input type="file" name='userfile3'  /></span>
+                        <span class="btn btn-danger  fileupload-exists btn-xs" data-dismiss="fileupload">Eliminar</span>
+                    </div>
+				
+              	</div>
+                
+			  </div>
+                         
+              <div class="col-xs-4" style="margin-bottom:30px; margin-top:10px">
+				
+              	<div class="fileupload fileupload-<?=(nvl($equino['imagen4'])!='') ?'exists':'new'?>" data-provides="fileupload">
+                	
+                    <div class="fileupload-new thumbnail" style="width: 233px; height: 175px;"><img src="<?=base_url()?>resources/images/noimage.gif" />
+                    </div>
+                    <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 233px; max-height: 175px; line-height: 20px;"><?=(nvl($equino['imagen4'])!='') ?'<img src="'.base_url().'uploads/equinos/m'.$equino['imagen4'].'" />':''?>
+                    </div>
+                    
+                    <div>
+                        <span class="btn btn-file"><span class="fileupload-new">Seleccione una Imágen</span>
+                        <span class="fileupload-exists">Cambiar</span><input type="file" name='userfile4'  /></span>
+                        <span class="btn btn-danger  fileupload-exists btn-xs" data-dismiss="fileupload">Eliminar</span>
+                    </div>
+				
+              	</div>
+                
+			  </div>
+                         
+              <div class="col-xs-4" style="margin-bottom:30px; margin-top:10px">
+				
+              	<div class="fileupload fileupload-<?=(nvl($equino['imagen5'])!='') ?'exists':'new'?>" data-provides="fileupload">
+                	
+                    <div class="fileupload-new thumbnail" style="width: 233px; height: 175px;"><img src="<?=base_url()?>resources/images/noimage.gif" />
+                    </div>
+                    <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 233px; max-height: 175px; line-height: 20px;"><?=(nvl($equino['imagen5'])!='') ?'<img src="'.base_url().'uploads/equinos/m'.$equino['imagen5'].'" />':''?>
+                    </div>
+                    
+                    <div>
+                        <span class="btn btn-file"><span class="fileupload-new">Seleccione una Imágen</span>
+                        <span class="fileupload-exists">Cambiar</span><input type="file" name='userfile5'  /></span>
+                        <span class="btn btn-danger  fileupload-exists btn-xs" data-dismiss="fileupload">Eliminar</span>
+                    </div>
+				
+              	</div>
+                
+			  </div>
+                         
+              <div class="col-xs-4" style="margin-bottom:30px; margin-top:10px">
+				
+              	<div class="fileupload fileupload-<?=(nvl($equino['imagen6'])!='') ?'exists':'new'?>" data-provides="fileupload">
+                	
+                    <div class="fileupload-new thumbnail" style="width: 233px; height: 175px;"><img src="<?=base_url()?>resources/images/noimage.gif" />
+                    </div>
+                    <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 233px; max-height: 175px; line-height: 20px;"><?=(nvl($equino['imagen6'])!='') ?'<img src="'.base_url().'uploads/equinos/m'.$equino['imagen6'].'" />':''?>
+                    </div>
+                    
+                    <div>
+                        <span class="btn btn-file"><span class="fileupload-new">Seleccione una Imágen</span>
+                        <span class="fileupload-exists">Cambiar</span><input type="file" name='userfile6'  /></span>
+                        <span class="btn btn-danger  fileupload-exists btn-xs" data-dismiss="fileupload">Eliminar</span>
+                    </div>
+				
+              	</div>
+                
+			  </div>
+              
+              </div>
+
+
+			  	             	
+              <h4 class="Title" style="padding-top:10px;" >Genealogía</h4>
+              
+              <span>Digite los nombres en los cuadros.
+			</div>
+        </div>
+		
+        </div>
+		
+		  		
+	</div>	
+	</div>
+
+</div>
+<div class="row">
+
+	<ul id="org" style="display:none">
+        <li class="">
+           <div class="orgTd"><textarea class="textareaGen" rows="3" name="gen[a1]" ><?= nvl($equino['a1']) ?></textarea></div>
+           <ul>
+            <li>
+                 <div class="orgTd"><textarea class="textareaGen"  name="gen[a1b1]" placeholder="Madre" ><?= nvl($equino['a1b1']) ?></textarea></div>
+               <ul>
+                 <li class="">
+                    <div class="orgTd"><textarea class="textareaGen"  name="gen[a1b1c1]" placeholder="Madre" ><?= nvl($equino['a1b1c1']) ?></textarea></div>
+                   <ul>
+                     <li><div class="orgTd"><textarea class="textareaGen"  name="gen[a1b1c1d1]" ><?= nvl($equino['a1b1c1d1']) ?></textarea></div></li>
+                     <li><div class="orgTd"><textarea class="textareaGen"  name="gen[a1b1c1d2]" ><?= nvl($equino['a1b1c1d2']) ?></textarea></div></li>
+                    </ul>
+                </li>
+                 <li><div class="orgTd"><textarea class="textareaGen"  name="gen[a1b1c2]" placeholder="Padre" ><?= nvl($equino['a1b1c2']) ?></textarea></div>
+                     <ul>
+                         <li><div class="orgTd"><textarea class="textareaGen"  name="gen[a1b1c2d3]" ><?= nvl($equino['a1b1c2d3']) ?></textarea></div></li>
+                         <li><div class="orgTd"><textarea class="textareaGen"  name="gen[a1b1c2d4]" ><?= nvl($equino['a1b1c2d4']) ?></textarea></div></li>
+                     </ul>
+                 </li>
+                </ul>
+            </li>
+             
+             
+           <li>
+              <div class="orgTd"><textarea class="textareaGen"  name="gen[a1b2]" placeholder="Padre" ><?= nvl($equino['a1b2']) ?></textarea></div>
+             <ul>
+                <li class="">
+                    <div class="orgTd"><textarea class="textareaGen"  name="gen[a1b2c3]" placeholder="Madre" ><?= nvl($equino['a1b2c3']) ?></textarea></div>
+                   <ul>
+                     <li><div class="orgTd"><textarea class="textareaGen"  name="gen[a1b2c3d5]" ><?= nvl($equino['a1b2c3d5']) ?></textarea></div></li>
+                     <li><div class="orgTd"><textarea class="textareaGen"  name="gen[a1b2c3d6]" ><?= nvl($equino['a1b2c3d6']) ?></textarea></div></li>
+                   </ul>
+                </li>
+             <li class="">
+                <div class="orgTd"><textarea class="textareaGen"  name="gen[a1b2c4]" placeholder="Padre" ><?= nvl($equino['a1b2c4']) ?></textarea></div>
+                  <ul>
+                   <li>
+                    <div class="orgTd"><textarea class="textareaGen"  name="gen[a1b2c4d7]" ><?= nvl($equino['a1b2c4d7']) ?></textarea></div>
+                   <ul>
+                 </ul>
+                 </li>
+                 <li>
+                    <div class="orgTd"><textarea class="textareaGen"  name="gen[a1b2c4d8]" ><?= nvl($equino['a1b2c4d8']) ?></textarea></div>
+                 </li>
+                 </ul>
+             </li>
+             </ul>
+             </li>
+           </ul>
+         </li>
+    </ul>
+
+				    <div id="chart" class="orgChart"></div>
+                                       
+</div>
+<div class="row">
+	<div class="col-sm-2">
+	</div>
+	<div class="col-sm-10">    
+    				<br>
+               		<button type="submit" class="btn btn-default btn-lg active">Guardar Equino</button> &nbsp;&nbsp;<button type="button" class="btn btn-warning btn-lg active" onClick="location = '<?=base_url()?>index.php/equino/panel_lista'">Cancelar</button>
+    				<br>
+    </div>
+</div>
+
+
+</div>
+</section>
+
+<script language="javascript" type="text/javascript" src="<?=base_url()?>resources/js/jquery.price_format.js" ></script>
+
+<script>
+<!-- 
+var nav4 = window.Event ? true : false; 
+function acceptNum(evt){  
+	// NOTE: Backspace = 8, Enter = 13, '0' = 48, '9' = 57  
+	var key = nav4 ? evt.which : evt.keyCode;  
+	return (key <= 13 || (key >= 48 && key <= 57) || key==44); 
+} 
+
+jQuery(document).ready(function() {
+ 	
+	$('#precio').priceFormat({
+		prefix: '',
+		centsSeparator: '',
+		thousandsSeparator: '',
+		centsLimit: 0
+	 }); 
+
+});
+</script>

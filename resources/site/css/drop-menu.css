@@ -1,0 +1,684 @@
+.flat-mega-menu ul, .flat-mega-menu li, .flat-mega-menu a, .flat-mega-menu p, .flat-mega-menu img, .flat-mega-menu h2 {
+    box-sizing: border-box;
+    display: block;
+    line-height: normal;
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+.flat-mega-menu {
+    display: block;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 15px;
+    margin: 0 auto;
+    max-width: 992px;
+    min-height: 50px;
+    min-width: 180px;
+    padding: 0;
+    position: relative;
+    width: 100%;
+    z-index: 999;
+}
+.flat-mega-menu > ul {
+    display: left;
+    min-height: 50px;
+    width: 100%;
+}
+.flat-mega-menu > ul > li {
+    color: #fff;
+    float: left;
+    line-height: 50px;
+    min-height: 50px;
+    min-width: 10%;
+}
+.flat-mega-menu > ul > li > a {
+    color: #fff;
+    font-size: 14px;
+    line-height: 50px;
+    padding-left: 15px;
+    padding-right: 15px;
+    text-align: center;
+    width: 100%;
+    text-shadow: 0 1px 1px #000;
+    font-weight: 700;
+}
+.flat-mega-menu > ul > .title > a {
+    font-size: 1.4em;
+    line-height: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: left;
+    text-transform: uppercase;
+}
+.flat-mega-menu > ul > .titleMenu{
+	display: none;
+}
+.flat-mega-menu > ul > .title {
+    border-left: medium none;
+    min-width: 25%;
+}
+.flat-mega-menu ul .login-form {
+    cursor: pointer;
+    float: right;
+    min-width: 6%;
+    padding-left: 10px;
+    padding-right: 10px;
+    position: relative;
+    text-align: center;
+}
+.flat-mega-menu .login-form table, .flat-mega-menu .login-form tbody {
+    width: 100%;
+}
+.flat-mega-menu .login-form input {
+    background-color: #f4f4f4;
+    border: 0 none;
+    border-radius: 3px;
+    box-shadow: 0.5px 1px 3px 0 rgba(0, 0, 0, 0.1) inset;
+    box-sizing: border-box;
+    display: block;
+    height: 30px;
+    margin: 0 0 3px;
+    outline: 0 none;
+    padding: 0 10px;
+    width: 100%;
+}
+.flat-mega-menu .login-form input[type="submit"] {
+    background: none repeat scroll 0 0 #2888d2;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 3px;
+    box-shadow: 0.5px 0.866px 0 0 rgba(255, 248, 68, 0.106) inset;
+    color: #fff;
+    cursor: pointer;
+    font-family: "nunito regular";
+    font-size: 1em;
+    height: 35px;
+    margin-top: 10px;
+    opacity: 0.81;
+    outline: 0 none;
+    width: 100px;
+}
+.flat-mega-menu .login-form input[type="submit"]:hover {
+    opacity: 1;
+}
+.flat-mega-menu .login-form input[type="checkbox"] {
+    background-color: #fff;
+    cursor: pointer;
+    display: block;
+    float: left;
+    height: 35px;
+    outline: 0 none;
+    width: auto;
+}
+.flat-mega-menu .login-form label {
+    -moz-user-select: none;
+    color: #7d7d7d;
+    cursor: pointer;
+    display: block;
+    font-family: "nunito regular";
+    font-size: 0.8em;
+    font-weight: normal;
+    height: 35px;
+    line-height: 35px;
+    margin: 10px 0 0;
+    padding: 0;
+    white-space: nowrap;
+}
+.flat-mega-menu .login-form ul {
+    padding: 15px 15px 10px;
+    position: absolute;
+    right: 0;
+    width: 300px;
+}
+.flat-mega-menu .login-form:hover {
+    background-color: #fff;
+    color: #2888d2;
+    transition: background 0.3s linear 0s, color 0.3s linear 0s;
+}
+.flat-mega-menu ul .search-bar {
+    cursor: pointer;
+    float: right;
+    min-width: 6%;
+    text-align: center;
+}
+.flat-mega-menu .search-bar:hover {
+    color: #fff;
+    transition: background 0.3s linear 0s, color 0.3s linear 0s;
+}
+.flat-mega-menu .search-bar ul {
+    position: absolute;
+    right: 0px;
+    width: 50%;
+    margin-top: -4px;
+}
+.flat-mega-menu .search-bar table, .flat-mega-menu .fa-user tbody {
+    width: 100%;
+}
+.flat-mega-menu .search-bar table tr td:last-child {
+    width: 120px;
+}
+.flat-mega-menu .search-bar ul input[type="text"] {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #fff;
+    border-color: -moz-use-text-color rgba(0, 0, 0, 0);
+    border-image: none;
+    border-style: none solid;
+    border-width: 0 10px 0 0px;
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.55) inset;
+    box-sizing: border-box;
+    float: left;
+    height: 40px;
+    outline: 0 none;
+    padding: 10px;
+    width: 100%;
+    margin-left: 12px;
+    color: #000;
+}
+.flat-mega-menu .search-bar ul input[type="submit"] {
+    background: none repeat scroll 0 0 #2888d2;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 0.5px 0.866px 0 0 rgba(255, 248, 68, 0.106) inset;
+    color: #fff;
+    cursor: pointer;
+    float: left;
+    font-size: 0.9em;
+    height: 40px;
+    opacity: 0.81;
+    outline: 0 none;
+    width: 85%;
+}
+.flat-mega-menu .search-bar ul input[type="submit"]:hover {
+    opacity: 1;
+    outline: 0 none;
+}
+.flat-mega-menu > ul > li:hover > a {
+    background: none repeat scroll 0 0 #fff;
+    color: #666;
+    transition: background 0.3s linear 0s, color 0.3s linear 0s;
+    text-shadow: none;
+}
+.flat-mega-menu > ul > .title:hover > a {
+    background: inherit;
+    color: inherit;
+}
+.flat-mega-menu .drop-down {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: none repeat scroll 0 0 #fff;
+    border-color: -moz-use-text-color rgba(0, 0, 0, 0.1);
+    border-image: none;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    border-style: none solid solid;
+    border-width: 0 1px 3px;
+    float: left;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    position: absolute;
+    width: 150px;
+    z-index: 999;
+	border-bottom: 3px solid #1fb742;
+}
+.flat-mega-menu .drop-down .drop-down {
+    border-top: 1px solid rgba(33, 71, 192, 0.1);
+}
+.flat-mega-menu .drop-down li {
+    float: left;
+    position: relative;
+    width: 100%;
+}
+.flat-mega-menu .drop-down li a {
+    color: #555658;
+    font-size: 0.9em;
+    padding: 10px 20px 10px 25px;
+    text-align: left;
+    transition: color 0.2s linear 0s, padding-left 0.2s linear 0s;
+
+}
+.flat-mega-menu .drop-down li:hover > a {
+    color: #000;
+    padding-left: 30px;
+}
+.flat-mega-menu > ul > li:hover .drop-down {
+    display: block;
+}
+.flat-mega-menu ul li .drop-down li:hover > .drop-down {
+    display: block;
+}
+.flat-mega-menu > ul > li .drop-down.hover-fade {
+    display: none;
+}
+.flat-mega-menu > ul > li:hover > .drop-down.hover-fade, .flat-mega-menu > ul > li .drop-down li:hover > .drop-down.hover-fade {
+    animation: 0.3s linear 0s normal forwards 1 hover-fade;
+    display: block;
+}
+@keyframes hover-fade {
+0% {
+    opacity: 0;
+}
+100% {
+    opacity: 1;
+}
+}
+@keyframes hover-fade {
+0% {
+    opacity: 0;
+}
+100% {
+    opacity: 1;
+}
+}
+.flat-mega-menu > ul > li .drop-down.hover-zoom {
+    display: none;
+}
+.flat-mega-menu > ul > li:hover > .drop-down.hover-zoom, .flat-mega-menu > ul > li .drop-down li:hover > .drop-down.hover-zoom {
+    animation: 0.2s linear 0s normal forwards 1 hover-zoom;
+    display: block;
+}
+@keyframes hover-zoom {
+0% {
+    opacity: 0;
+    transform: scale(0.8, 0.8);
+}
+100% {
+    opacity: 1;
+    transform: scale(1, 1);
+}
+}
+@keyframes hover-zoom {
+0% {
+    opacity: 0;
+    transform: scale(0.8, 0.8);
+}
+100% {
+    opacity: 1;
+    transform: scale(1, 1);
+}
+}
+.flat-mega-menu > ul > li .drop-down.hover-expand {
+    display: none;
+}
+.flat-mega-menu > ul > li:hover > .drop-down.hover-expand, .flat-mega-menu > ul > li .drop-down li:hover > .drop-down.hover-expand {
+    animation: 0.2s linear 0s normal forwards 1 hover-expand;
+    display: block;
+}
+@keyframes hover-expand {
+0% {
+    opacity: 0;
+    transform: rotateY(90deg);
+}
+100% {
+    opacity: 1;
+    transform: rotateY(0deg);
+}
+}
+@keyframes hover-expand {
+0% {
+    opacity: 0;
+    transform: rotateY(90deg);
+}
+100% {
+    opacity: 1;
+    transform: rotateY(0deg);
+}
+}
+.flat-mega-menu .drop-down li i {
+    bottom: 0;
+    color: #555658;
+    height: 16px;
+    margin: auto;
+    position: absolute;
+    right: 20px;
+    top: 0;
+    z-index: 999;
+}
+.flat-mega-menu .drop-down .drop-down {
+    left: 100%;
+    top: -10px;
+    width: 150px;
+}
+.flat-mega-menu .drop-down.one-column {
+    width: 230px;
+}
+.flat-mega-menu .drop-down .drop-down.one-column {
+    width: 200px;
+}
+.flat-mega-menu .drop-down.two-column {
+    width: 322px;
+}
+.flat-mega-menu .drop-down.two-column ul {
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: 160px;
+}
+.flat-mega-menu .drop-down.full-width {
+    box-sizing: border-box;
+    left: 0;
+    margin-left: 0;
+    width: 100%;
+}
+.flat-mega-menu .drop-down.full-width ul {
+    cursor: default;
+    float: left;
+    width: 25%;
+}
+.flat-mega-menu .drop-down.full-width ul li {
+    float: left;
+    margin: 0;
+    padding: 6px 0 6px 3px;
+    width: 100%;
+}
+.flat-mega-menu .drop-down.full-width ul li a {
+    border: 0 none;
+    float: left;
+    margin: 0 10%;
+    padding: 0;
+    transition: text-indent 0.2s linear 0s;
+}
+.flat-mega-menu .drop-down.full-width ul li:hover a {
+    text-indent: 5px;
+}
+.flat-mega-menu .drop-down.full-width ul li p {
+    clear: both;
+    color: #949598;
+    float: left;
+    font-size: 0.9em;
+    margin: 0;
+    padding: 10px 10px 10px 11%;
+    width: 100%;
+}
+.flat-mega-menu .drop-down.social-bar {
+    width: 200px;
+}
+.flat-mega-menu hr {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+.flat-mega-menu img {
+
+    border-color: #fff;
+    border-style: solid;
+    border-width: 4px;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.08), 0 0 76px 0 rgba(0, 0, 0, 0.04) inset;
+    float: left;
+    width: 100%;
+}
+.flat-mega-menu img:hover {
+    opacity: 0.8;
+}
+.flat-mega-menu h2 {
+    color: #3a63b8;
+    font-size: 1.2em;
+    font-weight: normal;
+    margin: 0;
+    padding: 5px 5px 5px 10%;
+}
+.flat-mega-menu .social-bar {
+    position: relative;
+}
+.flat-mega-menu .social-bar ul {
+    background-color: #fff;
+    border-bottom: 3px solid #2888d2;
+    padding: 10px;
+    position: absolute;
+    right: 0;
+    width: 262px;
+}
+.flat-mega-menu .social-bar ul li {
+    float: left;
+    height: 40px;
+    margin: 10px;
+    padding: 0;
+    width: 40px;
+}
+.flat-mega-menu .social-bar ul a {
+    display: block;
+    height: 40px;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    width: 40px;
+}
+.flat-mega-menu .social-bar ul a i {
+    background-image: linear-gradient(0deg, rgba(233, 233, 233, 1) 0px, rgba(233, 233, 233, 1) 100%);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    color: #797979;
+    font-size: 1.3em;
+    height: 40px;
+    left: 0;
+    line-height: 40px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 40px;
+}
+.flat-mega-menu .social-bar ul a:hover i {
+    background: none repeat scroll 0 0 #c7c7c7;
+    color: #000;
+}
+.flat-mega-menu > label, .flat-mega-menu > input {
+    display: none;
+}
+
+
+@media screen and (max-width: 1030px) {
+.flat-mega-menu > ul > li > a {
+    padding-left: 16px;
+    padding-right: 16px;
+}
+}
+@media screen and (max-width: 815px) {
+
+
+.flat-mega-menu > ul > li > a {
+    color: #fff;
+    font-size: 1em;
+    line-height: 50px;
+    padding-left: 15px;
+    padding-right: 15px;
+    text-align: center;
+    width: 100%;
+    letter-spacing: -0.5px;
+}
+.flat-mega-menu > ul > .titleMenu{
+	display: block;
+	text-align: center;
+	font-size: 24px;
+	font-weight: 100;
+}
+
+.flat-mega-menu > ul > li {
+    border-bottom: 1px solid #69a745;
+    border-left: medium none !important;
+    border-right: medium none !important;
+    color: white !important;
+    width: 100%;
+    background-color: #72B045;
+}
+.flat-mega-menu > ul > li > a {
+    color: white !important;
+}
+.flat-mega-menu > ul > .title a {
+    text-align: center;
+}
+.flat-mega-menu .drop-down.full-width {
+    left: 0 !important;
+    position: relative;
+}
+.flat-mega-menu .drop-down.one-column, .flat-mega-menu .drop-down.two-column, .flat-mega-menu .drop-down.full-width, .flat-mega-menu .drop-down .drop-down, .flat-mega-menu .social-bar ul, .flat-mega-menu .search-bar ul, .flat-mega-menu .login-form ul {
+    display: block !important;
+    left: 0;
+    position: relative;
+    width: 100% !important;
+}
+.flat-mega-menu .drop-down .drop-down {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: #e8e8e8 -moz-use-text-color;
+    border-image: none;
+    border-left: 0 none;
+    border-right: 0 none;
+    border-style: solid none;
+    border-width: 1px 0;
+    padding: 0;
+    top: 0;
+}
+.flat-mega-menu .drop-down .drop-down.one-column {
+    padding-left: 20px;
+}
+.flat-mega-menu > ul > li .drop-down.hover-expand, .flat-mega-menu > ul > li .drop-down.hover-fade, .flat-mega-menu > ul > li .drop-down.hover-zoom {
+    border: 0 none;
+    display: none;
+}
+.flat-mega-menu > ul > li:hover > .drop-down.hover-expand, .flat-mega-menu > ul > li:hover > .drop-down.hover-fade, .flat-mega-menu > ul > li:hover > .drop-down.hover-zoom, .flat-mega-menu > ul > li .drop-down li:hover > .drop-down.hover-expand, .flat-mega-menu > ul > li .drop-down li:hover > .drop-down.hover-fade, .flat-mega-menu > ul > li .drop-down li:hover > .drop-down.hover-zoom {
+    animation: 0.2s linear 0s normal forwards 1 hover-default;
+    display: block;
+}
+.flat-mega-menu > ul > .login-form:hover, .flat-mega-menu > ul > .search-bar:hover, .flat-mega-menu > ul > li:hover > a {
+    background: inherit;
+    color: #fff;
+}
+.flat-mega-menu ul .login-form, .flat-mega-menu ul .search-bar {
+    margin: 0;
+    padding: 0;
+}
+.flat-mega-menu ul .login-form label {
+    text-align: left;
+    text-indent: 10px;
+}
+.flat-mega-menu ul .login-form table td {
+    cursor: default;
+}
+.flat-mega-menu .drop-down.two-column ul, .flat-mega-menu .drop-down.full-width ul {
+    width: 50%;
+}
+.flat-mega-menu .drop-down.one-column a, .flat-mega-menu .drop-down.two-column a {
+    float: left;
+    width: auto;
+}
+.flat-mega-menu ul .social-bar {
+    text-align: center;
+}
+.flat-mega-menu ul .social-bar ul li {
+    display: inline-block;
+    float: none;
+}
+.flat-mega-menu .drop-down li .fa.fa-angle-right {
+    color: #555658;
+    display: block;
+    float: right;
+    height: auto;
+    line-height: 38px;
+    margin: 0 17px 0 0;
+    padding: 0;
+    position: relative;
+    right: 0;
+    transform: rotate(90deg);
+    z-index: 9999;
+}
+.flat-mega-menu #mobile-button {
+    display: none;
+    position: absolute;
+}
+.flat-mega-menu > ul {
+    height: 50px;
+    overflow: hidden;
+}
+.flat-mega-menu #mobile-button:checked + ul {
+    height: auto;
+    overflow: visible;
+}
+.flat-mega-menu > label {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: #fff;
+    cursor: pointer;
+    display: block;
+    font-size: 2em;
+    height: 50px;
+    left: 0;
+    line-height: 50px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 60px;
+}
+.flat-mega-menu > label i {
+    -moz-user-select: none;
+}
+.flat-mega-menu ul .title {
+    padding-left: 50px;
+}
+.flat-mega-menu .collapsed .drop-down.one-column, .flat-mega-menu .collapsed .drop-down.two-column, .flat-mega-menu .collapsed .drop-down.full-width, .flat-mega-menu .collapsed .drop-down .drop-down, .flat-mega-menu .collapse .social-bar ul, .flat-mega-menu .collapse .search-bar ul, .flat-mega-menu .collapse .login-form ul {
+    display: none !important;
+    left: 0;
+    position: relative;
+    width: 100% !important;
+}
+.flat-mega-menu > .collapsed > li:hover > .drop-down.hover-expand, .flat-mega-menu > .collapsed > li:hover > .drop-down.hover-fade, .flat-mega-menu > .collapsed > li:hover > .drop-down.hover-zoom, .flat-mega-menu > .collapse > li .drop-down li:hover > .drop-down.hover-expand, .flat-mega-menu > .collapsed > li .drop-down li:hover > .drop-down.hover-fade, .flat-mega-menu > .collapsed > li .drop-down li:hover > .drop-down.hover-zoom {
+    animation: 0.2s linear 0s normal forwards 1 hover-fade;
+    display: block !important;
+}
+@keyframes hover-fade {
+0% {
+    opacity: 0;
+}
+100% {
+    opacity: 1;
+}
+}
+
+@keyframes hover-fade {
+0% {
+    opacity: 0;
+}
+100% {
+    opacity: 1;
+}
+}
+}
+@media screen and (max-width: 320px) {
+.flat-mega-menu .drop-down.two-column ul, .flat-mega-menu .drop-down.full-width ul {
+    width: 100%;
+}
+.flat-mega-menu ul .search-bar td {
+    box-sizing: border-box;
+    cursor: default;
+    float: left;
+    padding: 5px 20px;
+    width: 100% !important;
+}
+.flat-mega-menu ul .search-bar input[type="text"], .flat-mega-menu ul .search-bar input[type="submit"] {
+    border: 0 none;
+    margin: 0;
+    width: 100%;
+}
+.flat-mega-menu ul .login-form ul {
+    padding: 20px;
+}
+.flat-mega-menu ul .login-form td {
+    cursor: default;
+    float: left;
+    width: 100%;
+}
+.flat-mega-menu ul .login-form input[type="submit"] {
+    width: 100%;
+}
+.flat-mega-menu ul .title {
+    padding-left: 0;
+    text-indent: 60px;
+}
+}

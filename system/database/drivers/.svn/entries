@@ -1,0 +1,92 @@
+10
+
+dir
+25
+https://caballos.googlecode.com:443/svn/system/database/drivers
+https://caballos.googlecode.com:443/svn
+
+
+
+2014-07-30T01:45:15.197336Z
+3
+diegoivanc
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+d704f56b-53f2-1cf8-c8af-2ca5e6a6a57b
+
+mssql
+dir
+
+sqlite
+dir
+
+oci8
+dir
+
+pdo
+dir
+
+postgre
+dir
+
+mysql
+dir
+
+odbc
+dir
+
+cubrid
+dir
+
+sqlsrv
+dir
+
+index.html
+file
+
+
+
+
+2014-07-30T03:23:49.000000Z
+0227cfd904e99656279202032b98d4a7
+2014-07-30T01:45:15.197336Z
+3
+diegoivanc
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+114
+
+mysqli
+dir
+

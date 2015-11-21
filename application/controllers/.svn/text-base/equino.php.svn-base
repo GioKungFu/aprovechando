@@ -1,0 +1,726 @@
+<?php
+
+class Equino extends CI_Controller {
+
+	function __construct()
+	{
+		parent::__construct();
+		$this->load->library('session');
+		$this->load->helper('url');
+		$this->load->helper('cookie');
+		$this->load->model('core/vendedor_model');
+		$this->load->model('core/equino_model');
+		$this->load->model('core/preguntas_model');
+		
+	}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+	function vender()
+	{
+		
+		if($this->session->userdata('id_usuario')) {
+			
+			$d['id_usuario'] = $this->session->userdata('id_usuario');
+			$d['vendedor']= $this->vendedor_model->DatosVendedor($d['id_usuario']);
+			$this->load->view('core/core_inicio');
+			$this->load->view('panel/panel_vender_equino');
+			$this->load->view('core/core_fin');
+		}
+		else{
+	
+			 redirect('core/main/registro');
+		}
+	}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	function guardar_equino()
+	{
+		
+		if($this->session->userdata('id_usuario')) {
+
+			$dat = array();
+			$dat['equino'] = $this->input->post('equi');
+			$dat['genealogia'] = $this->input->post('gen');
+			$dat['equino']['id_usuario'] = $this->session->userdata('id_usuario');
+			
+			//Subir imagen
+			//Configuración de la libreria upload
+			$config['upload_path'] = './uploads/equinos/';
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['max_size']	= '5000000';
+			$config['max_width']  = '3970';
+			$config['max_height']  = '2234';
+			$config['encrypt_name']  = 'TRUE';
+			
+	
+			$this->load->library('upload', $config);
+			
+			$this->load->library('thumbs', $config);
+	
+	        //imagen 1
+			if ( ! $this->upload->do_upload('userfile1') )
+			{
+				
+				$error = array('error' => $this->upload->display_errors());
+				//validar error
+			}
+			else
+			{
+
+				$res = $this->upload->data();
+				$dat['equino']['imagen'] = $res['file_name'];
+				$this->thumbs->crear_thumbs('./uploads/equinos/',$res['file_name']);
+			}
+		
+			if ( ! $this->upload->do_upload('userfile2') )
+			{
+				
+				$error = array('error' => $this->upload->display_errors());
+				//validar error
+			}
+			else
+			{
+
+				$res = $this->upload->data();
+				$dat['equino']['imagen2'] = $res['file_name'];
+				$this->thumbs->crear_thumbs('./uploads/equinos/',$res['file_name']);
+			}
+		
+	
+			if ( ! $this->upload->do_upload('userfile3') )
+			{
+				
+				$error = array('error' => $this->upload->display_errors());
+				//validar error
+			}
+			else
+			{
+
+				$res = $this->upload->data();
+				$dat['equino']['imagen3'] = $res['file_name'];
+				$this->thumbs->crear_thumbs('./uploads/equinos/',$res['file_name']);
+			}
+		
+	
+			if ( ! $this->upload->do_upload('userfile4') )
+			{
+				
+				$error = array('error' => $this->upload->display_errors());
+				//validar error
+			}
+			else
+			{
+
+				$res = $this->upload->data();
+				$dat['equino']['imagen4'] = $res['file_name'];
+				$this->thumbs->crear_thumbs('./uploads/equinos/',$res['file_name']);
+			}
+		
+	
+			if ( ! $this->upload->do_upload('userfile5') )
+			{
+				
+				$error = array('error' => $this->upload->display_errors());
+				//validar error
+			}
+			else
+			{
+
+				$res = $this->upload->data();
+				$dat['equino']['imagen5'] = $res['file_name'];
+				$this->thumbs->crear_thumbs('./uploads/equinos/',$res['file_name']);
+			}
+		
+	
+			if ( ! $this->upload->do_upload('userfile6') )
+			{
+				
+				$error = array('error' => $this->upload->display_errors());
+				//validar error
+			}
+			else
+			{
+
+				$res = $this->upload->data();
+				$dat['equino']['imagen6'] = $res['file_name'];
+				$this->thumbs->crear_thumbs('./uploads/equinos/',$res['file_name']);
+			}
+			$dat['equino']['fecha_registro'] = date("Y-m-d H:i:s");
+			$id_equino = $this -> equino_model -> crearEquino($dat['equino']);
+			
+			$dat['genealogia']['id_equino'] = $id_equino;
+			$id_equino = $this -> equino_model -> crearGenealogia($dat['genealogia']);
+		
+			//----------------------------------------------------------
+			
+			redirect('equino/panel_lista');
+		    
+		}
+		else{
+	
+			 redirect('core/main/registro');
+		}
+	}	
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+Muestra el formulario de editar equino
+*/
+/////////////////////////////////////
+	function editar($id)
+	{
+		
+		if($this->session->userdata('id_usuario')) {
+			
+			$data['id_usuario'] = $this->session->userdata('id_usuario');
+			$data['vendedor']= $this->vendedor_model->DatosVendedor($data['id_usuario']);
+			$data['equino'] = $this->equino_model->obtenerEquino( $id ); 
+			
+			$this->load->view('core/core_inicio');
+			$this->load->view('panel/panel_editar_equino', $data);
+			$this->load->view('core/core_fin');
+		}
+		else{
+	
+			 redirect('core/main/registro');
+		}
+	}
+
+		
+/////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	function editar_equino()
+	{
+		
+		if($this->session->userdata('id_usuario')) {
+
+			$dat = array();
+			$dat['equino'] = $this->input->post('equi');
+			$dat['genealogia'] = $this->input->post('gen');
+			$dat['equino']['id_usuario'] = $this->session->userdata('id_usuario');
+			
+			$id_equino = $this->input->post('id_equino');
+			
+			/*
+			//Subir imagen
+			//Configuración de la libreria upload
+			$config['upload_path'] = './uploads/equinos/';
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['max_size']	= '5000000';
+			$config['max_width']  = '3970';
+			$config['max_height']  = '2234';
+			$config['encrypt_name']  = 'TRUE';
+			
+	
+			$this->load->library('upload', $config);
+			
+			$this->load->library('thumbs', $config);
+	
+	        //imagen 1
+			if ( ! $this->upload->do_upload('userfile1') )
+			{
+				
+				$error = array('error' => $this->upload->display_errors());
+				//validar error
+			}
+			else
+			{
+
+				$res = $this->upload->data();
+				$dat['equino']['imagen'] = $res['file_name'];
+				$this->thumbs->crear_thumbs('./uploads/equinos/',$res['file_name']);
+			}
+		
+			if ( ! $this->upload->do_upload('userfile2') )
+			{
+				
+				$error = array('error' => $this->upload->display_errors());
+				//validar error
+			}
+			else
+			{
+
+				$res = $this->upload->data();
+				$dat['equino']['imagen2'] = $res['file_name'];
+				$this->thumbs->crear_thumbs('./uploads/equinos/',$res['file_name']);
+			}
+		
+	
+			if ( ! $this->upload->do_upload('userfile3') )
+			{
+				
+				$error = array('error' => $this->upload->display_errors());
+				//validar error
+			}
+			else
+			{
+
+				$res = $this->upload->data();
+				$dat['equino']['imagen3'] = $res['file_name'];
+				$this->thumbs->crear_thumbs('./uploads/equinos/',$res['file_name']);
+			}
+		
+	
+			if ( ! $this->upload->do_upload('userfile4') )
+			{
+				
+				$error = array('error' => $this->upload->display_errors());
+				//validar error
+			}
+			else
+			{
+
+				$res = $this->upload->data();
+				$dat['equino']['imagen4'] = $res['file_name'];
+				$this->thumbs->crear_thumbs('./uploads/equinos/',$res['file_name']);
+			}
+		
+	
+			if ( ! $this->upload->do_upload('userfile5') )
+			{
+				
+				$error = array('error' => $this->upload->display_errors());
+				//validar error
+			}
+			else
+			{
+
+				$res = $this->upload->data();
+				$dat['equino']['imagen5'] = $res['file_name'];
+				$this->thumbs->crear_thumbs('./uploads/equinos/',$res['file_name']);
+			}
+		
+	
+			if ( ! $this->upload->do_upload('userfile6') )
+			{
+				
+				$error = array('error' => $this->upload->display_errors());
+				//validar error
+			}
+			else
+			{
+
+				$res = $this->upload->data();
+				$dat['equino']['imagen6'] = $res['file_name'];
+				$this->thumbs->crear_thumbs('./uploads/equinos/',$res['file_name']);
+			}
+			*/
+			//$dat['equino']['fecha_registro'] = date("Y-m-d H:i:s");
+			$id_equino = $this -> equino_model -> editarEquino($id_equino,$dat['equino']);
+			
+			//$dat['genealogia']['id_equino'] = $id_equino;
+			$id_equino = $this -> equino_model -> editarGenealogia($id_equino,$dat['genealogia']);
+		
+			//----------------------------------------------------------
+			//echo $id_equino;
+			redirect('equino/panel_lista');
+		    
+		}
+		else{
+	
+			 redirect('core/main/registro');
+		}
+	}	
+		
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+	function eliminar()
+	{
+		if($this->session->userdata('id_usuario')) 
+		{
+			
+			if($this->input->post('id'))
+			{
+		    	
+				if($equino = $this->equino_model->obtenerEquino($this->input->post('id')) )
+				{
+					
+					
+					if( $this->equino_model->eliminarEquino($this->input->post('id')) )
+					{
+						
+						//eliminar imágenes
+						$absolute_path = FCPATH.'uploads/equinos/';
+						
+						if( file_exists($absolute_path.$equino['imagen']) )
+							@unlink($absolute_path.$equino['imagen']);
+						if( file_exists($absolute_path.'s'.$equino['imagen']) )
+							@unlink($absolute_path.'s'.$equino['imagen']);
+						if( file_exists($absolute_path.'m'.$equino['imagen']) )
+							@unlink($absolute_path.'m'.$equino['imagen']);
+						if( file_exists($absolute_path.'b'.$equino['imagen']) )
+							@unlink($absolute_path.'b'.$equino['imagen']);
+						
+						if( file_exists($absolute_path.$equino['imagen2']) )
+							@unlink($absolute_path.$equino['imagen2']);
+						if( file_exists($absolute_path.'s'.$equino['imagen2']) )
+							@unlink($absolute_path.'s'.$equino['imagen2']);
+						if( file_exists($absolute_path.'m'.$equino['imagen2']) )
+							@unlink($absolute_path.'m'.$equino['imagen2']);
+						if( file_exists($absolute_path.'b'.$equino['imagen2']) )
+							@unlink($absolute_path.'b'.$equino['imagen2']);
+						
+						if( file_exists($absolute_path.$equino['imagen3']) )
+							@unlink($absolute_path.$equino['imagen3']);
+						if( file_exists($absolute_path.'s'.$equino['imagen3']) )
+							@unlink($absolute_path.'s'.$equino['imagen3']);
+						if( file_exists($absolute_path.'m'.$equino['imagen3']) )
+							@unlink($absolute_path.'m'.$equino['imagen3']);
+						if( file_exists($absolute_path.'b'.$equino['imagen3']) )
+							@unlink($absolute_path.'b'.$equino['imagen3']);
+						
+						if( file_exists($absolute_path.$equino['imagen4']) )
+							@unlink($absolute_path.$equino['imagen4']);
+						if( file_exists($absolute_path.'s'.$equino['imagen4']) )
+							@unlink($absolute_path.'s'.$equino['imagen4']);
+						if( file_exists($absolute_path.'m'.$equino['imagen4']) )
+							@unlink($absolute_path.'m'.$equino['imagen4']);
+						if( file_exists($absolute_path.'b'.$equino['imagen4']) )
+							@unlink($absolute_path.'b'.$equino['imagen4']);
+						
+						if( file_exists($absolute_path.$equino['imagen5']) )
+							@unlink($absolute_path.$equino['imagen5']);
+						if( file_exists($absolute_path.'s'.$equino['imagen5']) )
+							@unlink($absolute_path.'s'.$equino['imagen5']);
+						if( file_exists($absolute_path.'m'.$equino['imagen5']) )
+							@unlink($absolute_path.'m'.$equino['imagen5']);
+						if( file_exists($absolute_path.'b'.$equino['imagen5']) )
+							@unlink($absolute_path.'b'.$equino['imagen5']);
+						
+						if( file_exists($absolute_path.$equino['imagen6']) )
+							@unlink($absolute_path.$equino['imagen6']);
+						if( file_exists($absolute_path.'s'.$equino['imagen6']) )
+							@unlink($absolute_path.'s'.$equino['imagen6']);
+						if( file_exists($absolute_path.'m'.$equino['imagen6']) )
+							@unlink($absolute_path.'m'.$equino['imagen6']);
+						if( file_exists($absolute_path.'b'.$equino['imagen6']) )
+							@unlink($absolute_path.'b'.$equino['imagen6']);
+						
+						$respuesta = array (
+						  'eliminado'=>true,
+						  'estado'=>'Success',
+						  'mensaje'=>'Publicación eliminada');
+					
+					}
+					else
+					{
+
+						$respuesta = array (
+						  'eliminado'=>false,
+						  'estado'=>'Error',
+						  'mensaje'=>"Ups, hubo un error al eliminar el equino, por favor contáctese con soporte.");
+					} 
+				}
+				else
+				{
+					$respuesta = array (
+					  'eliminado'=>false,
+					  'estado'=>'Error',
+					  'mensaje'=>"El equino no se encuentra en la base de datos. No es posible eliminar.");
+				}
+			}
+			else
+			{
+		
+				$respuesta = array (
+				  'eliminado'=>false,
+				  'estado'=>'Error',
+				  'mensaje'=>"No tiene permisos para esta acción");
+			}
+
+		}
+		else
+		{
+	
+			$respuesta = array (
+			  'eliminado'=>false,
+			  'estado'=>'Error',
+			  'mensaje'=>"No tiene permisos para esta acción");
+		}
+		echo json_encode($respuesta);
+		
+	}
+	
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+	function cambiarEstado()
+	{
+		if($this->session->userdata('id_usuario')) 
+		{
+			
+			if($this->input->post('id'))
+			{
+		    	
+				if($equino = $this->equino_model->obtenerEquino($this->input->post('id')) )
+				{
+					
+					$estado['estado'] = $this->input->post('estado'); 
+					if( $this->equino_model->actualizarEstado( $this->input->post('id'), $estado ) )
+					{
+						
+						
+						$respuesta = array (
+						  'editado'=>true,
+						  'estado'=>'Success',
+						  'mensaje'=>'La publicación ahora se encuentra en la lista de '.$estado['estado'].'s');
+					
+					}
+					else
+					{
+
+						$respuesta = array (
+						  'editado'=>false,
+						  'estado'=>'Error',
+						  'mensaje'=>"Ups, hubo un error al eliminar el equino, por favor contáctese con soporte.");
+					} 
+					
+				}
+				else
+				{
+					$respuesta = array (
+					  'editado'=>false,
+					  'estado'=>'Error',
+					  'mensaje'=>"El equino no se encuentra en la base de datos. No es posible eliminar.");
+				}
+			}
+			else
+			{
+		
+				$respuesta = array (
+				  'eliminado'=>false,
+				  'estado'=>'Error',
+				  'mensaje'=>"No tiene permisos para esta acción");
+			}
+
+		}
+		else
+		{
+	
+			$respuesta = array (
+			  'eliminado'=>false,
+			  'estado'=>'Error',
+			  'mensaje'=>"No tiene permisos para esta acción");
+		}
+		echo json_encode($respuesta);
+		
+	}
+	
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+	function panel_lista()
+	{
+
+		if($this->session->userdata('id_usuario')) 
+		{
+			$estado = 'Activo';
+		    $data['equinos_activos'] = $this -> equino_model ->listarEquinosPorUsuarioPorEstado( $this->session->userdata('id_usuario'), $estado );
+		    $data['reproductores'] = $this -> equino_model ->listarEquinosReproductoresPorUsuario( $this->session->userdata('id_usuario') );
+			$estado = 'Pausado';
+		    $data['equinos_pausados'] = $this -> equino_model ->listarEquinosPorUsuarioPorEstado( $this->session->userdata('id_usuario'), $estado );
+			$estado = 'Inactivo';
+		    $data['equinos_inactivos'] = $this -> equino_model ->listarEquinosPorUsuarioPorEstado( $this->session->userdata('id_usuario'), $estado );
+			
+			$this->load->view('core/core_inicio');
+			$this->load->view('panel/panel_lista_equinos',$data);
+			$this->load->view('core/core_fin');
+
+		}
+		else
+		{
+	
+			redirect('core/main/registro');
+		}
+	}
+	
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+	function detalles($id)
+	{
+			
+		    $data['equino'] = $this -> equino_model ->obtenerEquino( $id );
+			 $data['preguntas'] = $this -> preguntas_model ->obtenerPregunta($id);
+			$data['vendedor'] = $this -> vendedor_model ->obtenerDatosUsuario( $data['equino']['id_usuario'] );
+			
+			$visitas['visitas'] = $data['equino']['visitas'] + 1;
+			$this -> equino_model ->actualizarVisitas( $id, $visitas );
+			//actualizar visitas
+			
+			
+			//obtener id video youtube
+			$data['video'] = '';
+			if($data['equino']['video'] != '') 
+			{ 
+				
+				$match = preg_match("#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+(?=\?)|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+#", $data['equino']['video'], $matches); 
+				if((int) $match > 0) 
+				{ 
+						$data['video'] = $matches[0]; 
+				} 
+			} 
+			
+			$this->load->view('core/core_inicio');
+			$this->load->view('core/core_detalles',$data);
+			$this->load->view('core/core_fin');
+
+	}
+	
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+	function reproductores()
+	{
+		$raza = "";
+		if( $this->input->post('raza') )
+			$raza = $this->input->post('raza'); 
+			
+		$modalidad = "";
+		if( $this->input->post('modalidad') )
+			$modalidad = $this->input->post('modalidad'); 
+			
+		$color = "";
+		if( $this->input->post('color') )
+			$color = $this->input->post('color'); 
+			
+		$sexo = "";
+		if( $this->input->post('sexo') )
+			$raza = $this->input->post('sexo'); 
+			
+		$precio = "";
+		if( $this->input->post('precio') )
+			$raza = $this->input->post('precio'); 
+			
+		$departamento = "";
+		if( $this->input->post('departamento') )
+			$raza = $this->input->post('departamento'); 
+			
+		$municipio = "";
+		if( $this->input->post('municipio') )
+			$raza = $this->input->post('municipio'); 
+			
+		$busqueda = "";
+		if( $this->input->post('busqueda') )
+			$busqueda = $this->input->post('busqueda'); 
+			
+		$data['equinos'] = $this -> equino_model ->buscarEquinosReproductores($raza, $modalidad, $color, $sexo, $departamento, $municipio, $busqueda);
+		
+		$data['busqueda'] = $busqueda;
+		
+		$this->load->view('core/core_inicio');
+		$this->load->view('core/core_reproductores',$data);
+		$this->load->view('core/core_fin');
+	}
+		
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+	function busqueda()
+	{
+		
+		$raza = "";
+		if( $this->input->post('raza') )
+			$raza = $this->input->post('raza'); 
+			
+		$modalidad = "";
+		if( $this->input->post('modalidad') )
+			$modalidad = $this->input->post('modalidad'); 
+			
+		$color = "";
+		if( $this->input->post('color') )
+			$color = $this->input->post('color'); 
+			
+		$sexo = "";
+		if( $this->input->post('sexo') )
+			$raza = $this->input->post('sexo'); 
+			
+		$precio = "";
+		if( $this->input->post('precio') )
+			$raza = $this->input->post('precio'); 
+			
+		$departamento = "";
+		if( $this->input->post('departamento') )
+			$raza = $this->input->post('departamento'); 
+			
+		$municipio = "";
+		if( $this->input->post('municipio') )
+			$raza = $this->input->post('municipio'); 
+			
+		$busqueda = "";
+		if( $this->input->post('busqueda') )
+			$busqueda = $this->input->post('busqueda'); 
+			
+		$data['equinos'] = $this -> equino_model ->buscarEquinos($raza, $modalidad, $color, $sexo, $departamento, $municipio, $busqueda);
+		
+		$data['busqueda'] = $busqueda;
+		
+		$this->load->view('core/core_inicio');
+		$this->load->view('core/core_busqueda',$data);
+		$this->load->view('core/core_fin');
+	}
+	//preguntas
+	
+function preguntas()
+{
+	$data['id_equino']=$this->input->post('id_equino');
+	$data['pregunta']=$this->input->post('pregunta');
+	$this -> preguntas_model ->CrearPregunta($data);
+	
+	redirect('equino/detalles/'.$data['id_equino']);
+}
+
+	function PreguntasDeEquinos()
+	{
+		
+		if($this->session->userdata('id_usuario')) {
+			
+			$d['id_usuario'] = $this->session->userdata('id_usuario');
+			$d['vendedor']= $this->vendedor_model->DatosVendedor($d['id_usuario']);
+			$d['preguntas']= $this->preguntas_model->PreguntasRecientes($d['id_usuario']);
+			
+			$d['preguntas_recientes']=count($d['preguntas']);
+			$d['preguntas_estados']= $this->preguntas_model->PreguntasEstados($d['id_usuario'],'all');
+			$this->load->view('core/core_inicio');
+			$this->load->view('panel/panel_preguntas',$d);
+			$this->load->view('core/core_fin');
+		}
+		else{
+	
+			 redirect('core/main/registro');
+		}
+	}
+	
+	//esta funcion hace referencia a un pregunta determinada por id de pregunta
+	function Pregunta($id_pregunta)
+	{
+		
+		if($this->session->userdata('id_usuario')) {
+			
+			$d['id_usuario'] = $this->session->userdata('id_usuario');
+			$d['pregunta']= $this->preguntas_model->PreguntaId($id_pregunta);
+			$d['equino'] = $this -> equino_model ->obtenerEquino( $d['pregunta'][0]['id_equino'] );
+			
+			$d['preguntas']= $this->preguntas_model->PreguntasRecientes($d['id_usuario']);
+			$d['preguntas_recientes']=count($d['preguntas']);
+			$d['preguntas_estados']= $this->preguntas_model->PreguntasEstados($d['id_usuario'],'all');
+			$this->load->view('core/core_inicio');
+			$this->load->view('panel/panel_respuestas',$d);
+			$this->load->view('core/core_fin');
+		}
+		else{
+	
+			 redirect('core/main/registro');
+		}
+	}
+	//guardamos la respuesta de un equino determinado por id de pregunta
+	function respuesta()
+{
+	$data['id_pregunta']=$this->input->post('id_pregunta');
+	$data['respuesta']=$this->input->post('respuesta');
+	$this -> preguntas_model ->CrearRespuesta($data);
+	
+	redirect('equino/Pregunta/'.$data['id_pregunta']);
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+}

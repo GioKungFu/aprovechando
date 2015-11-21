@@ -1,0 +1,31 @@
+.csslider {position:relative;}
+.csslider .viewport{overflow:hidden;}
+.vertical.csslider .viewport{height:344px;}
+.horizontal.csslider ul.slides > li{float:left;}
+
+
+.csslider.vertical .viewport > ul > li {display:block;}
+.csslider li.itemslider {float:left;}
+.csslider li.item {margin-bottom:20px;}
+.csslider a.next,.csslider a.prev{
+	position:absolute;
+    top:0;
+}
+.csslider .product-shop {}
+.csslider .no-float .product-image {float:none;}
+.csslider  a.product-image {display:block;}
+
+.csslider a.prev, .csslider a.next {text-indent:-999em; display:inline-block; text-align:left;}
+.csslider a.prev{left:0}
+.csslider a.next{right:0}
+
+
+.csslider a.prev {position:absolute; top:32%; left:5px; width:28px; height:101px; cursor:pointer; background:transparent url(../images/icons.png) no-repeat -21px -324px;
+}
+
+.csslider a.prev:hover {background-position:-21px -432px;}
+.csslider a.next{position:absolute; top:32%; right:5px; width:28px; height:101px; cursor:pointer; background:transparent url(../images/icons.png) no-repeat -96px -324px;}
+.csslider a.next:hover{background-position: -96px -431px;}
+
+.deal_of_the_day .csslider a.prev, .deal_of_the_day .csslider a.next {top:35%;}
+

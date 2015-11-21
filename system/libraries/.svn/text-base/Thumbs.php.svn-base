@@ -1,0 +1,54 @@
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+
+class Thumbs
+{
+   protected $ci;
+   
+   function __construct()
+   {
+      $this->ci =& get_instance();
+   }
+
+   //comprueba si un email está repetido
+   function crear_thumbs($ruta,$archivo)
+   {
+      
+				//Redimensión de imágenes
+				$this->ci->load->library('newupload');
+				
+				$nomfile = explode('.', $archivo);
+				
+				$this->ci->newupload->upload($ruta.$archivo);
+				
+				// Tamaño small - Thumb (96px X 72px)
+				$this->ci->newupload->file_new_name_body = $nomfile[0];
+				$this->ci->newupload->file_name_body_pre = 's';
+				$this->ci->newupload->allowed = array('image/*');
+				$this->ci->newupload->image_resize = true;
+				$this->ci->newupload->image_ratio_fill= true;
+				$this->ci->newupload->image_x = 96;
+				$this->ci->newupload->image_y = 72;
+				$this->ci->newupload->process($ruta);
+		
+				// Tamaño medium - Listados (233px X 175px)
+				$this->ci->newupload->file_new_name_body = $nomfile[0];
+				$this->ci->newupload->file_name_body_pre = 'm';
+				$this->ci->newupload->allowed = array('image/*');
+				$this->ci->newupload->image_resize = true;
+				$this->ci->newupload->image_ratio_fill= true;
+				$this->ci->newupload->image_x = 233;
+				$this->ci->newupload->image_y = 175;
+				$this->ci->newupload->process($ruta);
+		
+				// Tamaño big - detalles (610px X 458px)
+				$this->ci->newupload->file_new_name_body = $nomfile[0];
+				$this->ci->newupload->file_name_body_pre = 'b';
+				$this->ci->newupload->allowed = array('image/*');
+				$this->ci->newupload->image_resize = true;
+				$this->ci->newupload->image_ratio_fill= true;
+				$this->ci->newupload->image_x = 610;
+				$this->ci->newupload->image_y = 458;
+				$this->ci->newupload->process($ruta);
+	  
+   }
+}

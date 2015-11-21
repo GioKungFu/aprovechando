@@ -1,0 +1,60 @@
+/**
+ * OneStepCheckout by EMThemes
+ *
+ * Based on  1.7.0.0 source code
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 EMThemes. (http://www.emthemes.com)
+ * @license     Commercial License. Granted for authorized users only.
+ */
+
+.opc-1sc:after { content:'.'; display:block; clear:both; visibility:hidden; height:0; overflow:hidden; zoom:1 }
+.opc-col1, .opc-col2, .opc-col3 { width:32%; float:left; margin-left:2% }
+.opc-col1 { margin-left:0 }
+
+.opc-col .section { margin-bottom:2em; }
+.opc-col .section:last-child { border-bottom:0 }
+
+.opc-col .step-title .number { font-size:18px; background:#0A263C; color:#fff; padding:3px 7px }
+.opc-col .step-title h2 { display:inline }
+
+.opc-col .form-list .field { width:100% }
+.opc-col .form-list .input-box { width:100% }
+.opc-col .form-list input.input-text { width:95% }
+.opc-col .form-list select { width:100% }
+.opc-col .form-list li.wide .input-box { width:100% }
+.opc-col .form-list li.wide input.input-text { width:95% }
+.opc-col .form-list li.wide select { width:95% }
+
+.opc-col .discount { margin: 10px; }
+.opc-col .discount label{margin-bottom:10px;float:left;}
+
+#opc-review .buttons-set { padding:0; border:0; margin:0; }
+
+/* hide checkbox "Use Billing Address" */
+#opc-shipping .control { display:none !important }
+
+/* hide all continue buttons except review's */
+.opc-col .buttons-set { display:none !important }
+#opc-review .buttons-set { display:block !important }
+
+#opc-login-popup { position:fixed; width:300px; margin:0 auto;z-index:9999;background:#fff;padding:20px }
+#opc-login-popup-overlay { display:block; position:fixed; width:100%; height:100%; top:0; left:0; z-index:9998; background:#000; opacity:.7 }
+#opc-login-popup .close-btn { background:url(../images/btn_popup-close.png) no-repeat; width:38px; height:38px; position:absolute;; top:-16px; right:-16px; text-indent:-99999px }
+
+#opc-login-popup .form-list .input-box { width:100% }
+#opc-login-popup .form-list input.input-text { width:95%; }
+#opc-login-popup h3 {margin-bottom:0;}
+#opc-login-popup .buttons-set{margin:10px 0 0;}
+/*============ fix IPOD ===================*/
+@media screen
+       and (min-device-width: 320px) and (max-device-width: 480px) {
+	   #em_quickshop_handler{display:none!important;}
+        #opc-login-popup{top:15px!important; width:230px}
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (orientation: portrait) 	
+{
+    .adapt-0 #opc-login-popup{top:90px!important}
+}

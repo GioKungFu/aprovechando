@@ -1,0 +1,385 @@
+<!-- NUEVO  IMAGES EFFECTS -->
+<link rel="stylesheet" href="<?=base_url()?>resources/css/sinister.css">
+<link rel="stylesheet" href="<?=base_url()?>resources/css/font-awesome.min.css">
+<link rel="stylesheet" href="<?=base_url()?>resources/css/animate.min.css">
+
+<!-- bootbox code -->
+<script src="<?=base_url()?>resources/js/bootbox.min.js"></script>
+
+<script>
+
+function finalizar(id)
+{
+	
+	bootbox.dialog({
+		message: "¿Está seguro que desea finalizar la publicación?",
+		title: "Finalizar publicación",
+		buttons: {
+			main: {
+				label: "Cancelar",
+				className: "btn-primary"
+			},
+			danger: {
+				label: "Finalizar!",
+				className: "btn-danger",
+				callback: function() {
+					
+					
+					jQuery.post('<?= site_url()?>/equino/cambiarEstado', 
+					{ id : id, estado : 'Inactivo' }, 
+					function(data){
+                		 resp = eval('(' +data+ ')');
+						 if(resp.estado == 'Success'){
+							 $('#toogle'+id ).html('<button type="button" class="btn btn-alert btn-xs" onClick="activar('+id+')"><i class="fa fa-warning"></i>  &nbsp; Activar publicación&nbsp;&nbsp;</button>');
+							$('#equino'+id ).clone().attr("id","equinoOff"+id ).appendTo( "#finalizados_ul" );
+							$('#equino'+id).remove();
+						 }else{
+							alert(resp.mensaje);	
+						 }
+					 })
+					 
+									
+				}
+			}
+
+		}
+	});
+
+
+}
+
+function pausar(id)
+{
+	
+	bootbox.dialog({
+		message: "¿Está seguro que desea pausar la publicación?",
+		title: "Pausar publicación",
+		buttons: {
+			main: {
+				label: "Cancelar",
+				className: "btn-primary"
+			},
+			danger: {
+				label: "Pausar!",
+				className: "btn-danger",
+				callback: function() {
+					
+					
+					jQuery.post('<?= site_url()?>/equino/cambiarEstado', 
+					{ id : id, estado : 'Pausado' }, 
+					function(data){
+                		 resp = eval('(' +data+ ')');
+						 if(resp.estado == 'Success'){
+							 $('#toogle'+id ).html('<button type="button" class="btn btn-alert btn-xs" onClick="activar('+id+')"><i class="fa fa-warning"></i>  &nbsp; Activar publicación&nbsp;&nbsp;</button>');
+							$('#equino'+id ).clone().attr("id","equinoOff"+id ).appendTo( "#pausados_ul" );
+							$('#equino'+id).remove();
+						 }else{
+							alert(resp.mensaje);	
+						 }
+					 })
+					 
+									
+				}
+			}
+
+		}
+	});
+
+
+}
+
+function activar(id)
+{
+	
+	bootbox.dialog({
+		message: "¿Está seguro que desea activar la publicación?",
+		title: "Activar publicación",
+		buttons: {
+			main: {
+				label: "Cancelar",
+				className: "btn-primary"
+			},
+			danger: {
+				label: "Activar!",
+				className: "btn-danger",
+				callback: function() {
+					
+					
+					jQuery.post('<?= site_url()?>/equino/cambiarEstado', 
+					{ id : id, estado : 'Activo' }, 
+					function(data){
+                		 resp = eval('(' +data+ ')');
+						 if(resp.estado == 'Success'){
+							$('#toogle'+id ).html('<button type="button" class="btn btn-alert btn-xs" onClick="pausar('+id+')"><i class="fa fa-warning"></i>  &nbsp; Pausar publicación&nbsp;&nbsp;</button>');
+							$('#equinoOff'+id ).clone().attr("id","equino"+id ).appendTo( "#activos_ul" );
+							$('#equinoOff'+id).remove();
+						 }
+						 alert(resp.mensaje);	
+						 
+					 })
+					 
+									
+				}
+			}
+
+		}
+	});
+
+
+}
+
+
+
+function eliminar(id)
+{
+	
+	bootbox.dialog({
+		message: "¿Está seguro que desea eliminar? Los cambios no podrán deshacerse.",
+		title: "Eliminar equino",
+		buttons: {
+			main: {
+				label: "Cancelar",
+				className: "btn-primary"
+			},
+			danger: {
+				label: "Eliminar!",
+				className: "btn-danger",
+				callback: function() {
+					
+					jQuery.post('<?= site_url()?>/equino/eliminar', 
+					{ id : id }, 
+					function(data){
+                		 resp = eval('(' +data+ ')');
+						 if(resp.estado == 'Success'){
+							$('#equino'+id).remove();
+						 }else{
+							alert(resp.mensaje);	
+						 }
+					 })
+									
+				}
+			}
+
+		}
+	});
+
+}
+
+</script>
+</head>
+<body>
+<? $this->load->view('core/core_menu') ?>
+
+<section id="Main">
+<div class="areaListados auto_margin">
+<div class="row">
+	
+    <? $this->load->view('panel/panel_menu') ?>
+    
+	<div class="col-sm-9">
+	<div class="conttPanel">
+		
+		 <div class="Bloques"> 
+		 <h3 class="Title">Lista de equinos</h3>
+		 <div class="bs-example">
+		     <!-- Nav tabs -->
+		     <ul class="nav nav-tabs" role="tablist">
+		       <li class="active"><a href="#activos" role="tab" data-toggle="tab">Equinos activos</a></li>
+		       <li><a href="#reproductores" role="tab" data-toggle="tab">Reproductores</a></li>
+		       <li><a href="#pausados" role="tab" data-toggle="tab">Pausados</a></li>
+		       <li><a href="#finalizados" role="tab" data-toggle="tab">Finalizados</a></li>
+		     </ul>
+		     
+		     <!-- Tab panes -->
+		     <div class="tab-content">
+		       
+               <div class="tab-pane  active" id="activos">
+		       	
+		       <div class="row">
+               
+		       	<ul class="row animated-area list-horses" id="activos_ul">
+		       	<? if(count($equinos_activos))
+				     foreach($equinos_activos as $equino)
+					 { ?>
+                     <li id="equino<?= $equino['id_equino'] ?>" class="col-sm-4 animated" data-animation-delay="0.3s" data-animation="fadeIn">
+                         <div class="blog-post">
+                             <div class="ImageWrapper ContentWrapperLi">
+                                 <img class="img-responsive" src="<?=base_url()?>uploads/equinos/m<?= $equino['imagen'] ?>" alt="<?= $equino['nombre'] ?>">
+                                 <div class="ContentLi">
+                                     <div class="Content" style="text-align: center; width: 100%; padding-top: 12px; ">
+                <?= $equino['nombre'] ?><br>
+                <!-- <i class="fa fa-trash-o"></i> ICONOS EN http://fortawesome.github.io/Font-Awesome/icons/ -->
+               <p><a href="<?=base_url()?>index.php/equino/detalles/<?= $equino['id_equino'] ?>/<?= url_title($equino['nombre']) ?>" target="_blank"><button type="button" class="btn btn-info btn-xs"><i class="fa fa-plus"></i>  &nbsp; Ver publicación &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></a></p>
+               <p><a href="<?=base_url()?>index.php/equino/editar/<?= $equino['id_equino'] ?>/<?= url_title($equino['nombre']) ?>" ><button type="button" class="btn btn-success btn-xs"><i class="fa fa-pencil"></i> &nbsp; Editar publicación&nbsp;&nbsp;&nbsp;&nbsp;</button></a></p>
+               <p id="toogle<?= $equino['id_equino'] ?>"><button type="button" class="btn btn-alert btn-xs" onClick="pausar(<?= $equino['id_equino'] ?>)"><i class="fa fa-warning"></i>  &nbsp; Pausar publicación&nbsp;&nbsp;</button></p>
+               <p><button type="button" class="btn btn-warning btn-xs" onClick="finalizar(<?= $equino['id_equino'] ?>)"><i class="fa fa-warning"></i>  &nbsp; Finalizar publicación</button></p>
+               <p><button type="button" class="btn btn-danger btn-xs" onClick="eliminar(<?= $equino['id_equino'] ?>)"><i class="fa fa-trash-o"></i> &nbsp; Eliminar publicación&nbsp;</button></p>
+                                     </div>
+                                 </div>
+                                 
+                                 <div class="Datainfo">
+                                    <span class="tt1"><?= $equino['nombre'] ?></span>
+                                    <span class="tt2">$<?= number_format($equino['precio'], 0, ',', '.') ?></span>
+                                    <span class="tt3"><strong>Publicado: </strong> <? $fecha=explode(' ', $equino['fecha_registro']); echo $fecha[0] ?></span>
+                                    <span class="tt4"><strong><i class="fa fa-user"></i> <?= $equino['visitas'] ?></strong> visitas</span>
+                                 </div>
+                             
+                             </div>
+                             
+                         </div>
+                     </li>
+                <?   } ?>     
+                     
+		       	 
+		       	</ul>
+		       </div>
+		       	 	       	  
+		       </div>
+               
+		       <div class="tab-pane " id="reproductores">
+				
+                <div class="row">
+               
+		       	<ul class="row animated-area list-horses" id="reproductores_ul">
+		       	<? if(count($reproductores))
+				     foreach($reproductores as $equino)
+					 { ?>
+                     <li id="equino<?= $equino['id_equino'] ?>" class="col-sm-4 animated" data-animation-delay="0.3s" data-animation="fadeIn">
+                         <div class="blog-post">
+                             <div class="ImageWrapper ContentWrapperLi">
+                                 <img class="img-responsive" src="<?=base_url()?>uploads/equinos/m<?= $equino['imagen'] ?>" alt="<?= $equino['nombre'] ?>">
+                                 <div class="ContentLi">
+                                     <div class="Content" style="text-align: center; width: 100%; padding-top: 12px; ">
+                <?= $equino['nombre'] ?><br>
+                <!-- <i class="fa fa-trash-o"></i> ICONOS EN http://fortawesome.github.io/Font-Awesome/icons/ -->
+               <p><a href="<?=base_url()?>index.php/equino/detalles/<?= $equino['id_equino'] ?>/<?= url_title($equino['nombre']) ?>" target="_blank"><button type="button" class="btn btn-info btn-xs"><i class="fa fa-plus"></i>  &nbsp; Ver publicación &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></a></p>
+               <p><a href="<?=base_url()?>index.php/equino/editar/<?= $equino['id_equino'] ?>/<?= url_title($equino['nombre']) ?>" ><button type="button" class="btn btn-success btn-xs"><i class="fa fa-pencil"></i> &nbsp; Editar publicación&nbsp;&nbsp;&nbsp;&nbsp;</button></a></p>
+               <p id="toogle<?= $equino['id_equino'] ?>"><button type="button" class="btn btn-alert btn-xs" onClick="pausar(<?= $equino['id_equino'] ?>)"><i class="fa fa-warning"></i>  &nbsp; Pausar publicación&nbsp;&nbsp;</button></p>
+               <p><button type="button" class="btn btn-warning btn-xs" onClick="finalizar(<?= $equino['id_equino'] ?>)"><i class="fa fa-warning"></i>  &nbsp; Finalizar publicación</button></p>
+               <p><button type="button" class="btn btn-danger btn-xs" onClick="eliminar(<?= $equino['id_equino'] ?>)"><i class="fa fa-trash-o"></i> &nbsp; Eliminar publicación&nbsp;</button></p>
+                                     </div>
+                                 </div>
+                                 
+                                 <div class="Datainfo">
+                                    <span class="tt1"><?= $equino['nombre'] ?></span>
+                                    <span class="tt2">$<?= number_format($equino['precio'], 0, ',', '.') ?></span>
+                                    <span class="tt3"><strong>Publicado: </strong> <? $fecha=explode(' ', $equino['fecha_registro']); echo $fecha[0] ?></span>
+                                    <span class="tt4"><strong><i class="fa fa-user"></i> <?= $equino['visitas'] ?></strong> visitas</span>
+                                 </div>
+                             
+                             </div>
+                             
+                         </div>
+                     </li>
+                <?   } ?>     
+		       	 
+		       	 
+		       	</ul>
+		       </div>    
+                          
+               </div>
+               
+		       <div class="tab-pane " id="pausados">
+<div class="row">
+               
+		       	<ul class="row animated-area list-horses" id="pausados_ul">
+		       	<? if(count($equinos_pausados))
+				     foreach($equinos_pausados as $equino)
+					 { ?>
+                     <li id="equinoOff<?= $equino['id_equino'] ?>" class="col-sm-4 animated" data-animation-delay="0.3s" data-animation="fadeIn">
+                         <div class="blog-post">
+                             <div class="ImageWrapper ContentWrapperLi">
+                                 <img class="img-responsive" src="<?=base_url()?>uploads/equinos/m<?= $equino['imagen'] ?>" alt="<?= $equino['nombre'] ?>">
+                                 <div class="ContentLi">
+                                     <div class="Content" style="text-align: center; width: 100%; padding-top: 12px; ">
+                <?= $equino['nombre'] ?><br>
+                <!-- <i class="fa fa-trash-o"></i> ICONOS EN http://fortawesome.github.io/Font-Awesome/icons/ -->
+               <p><a href="<?=base_url()?>index.php/equino/detalles/<?= $equino['id_equino'] ?>/<?= url_title($equino['nombre']) ?>" target="_blank"><button type="button" class="btn btn-info btn-xs"><i class="fa fa-plus"></i>  &nbsp; Ver publicación &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></a></p>
+               <p><a href="<?=base_url()?>index.php/equino/editar/<?= $equino['id_equino'] ?>/<?= url_title($equino['nombre']) ?>" target="_blank"><button type="button" class="btn btn-success btn-xs"><i class="fa fa-pencil"></i> &nbsp; Editar publicación&nbsp;&nbsp;&nbsp;&nbsp;</button></a></p>
+               <p id="toogle<?= $equino['id_equino'] ?>"><button type="button" class="btn btn-alert btn-xs" onClick="activar(<?= $equino['id_equino'] ?>)"><i class="fa fa-warning"></i>  &nbsp; Activar publicación&nbsp;&nbsp;</button></p>
+               <p><button type="button" class="btn btn-warning btn-xs" onClick="finalizar(<?= $equino['id_equino'] ?>)"><i class="fa fa-warning"></i>  &nbsp; Finalizar publicación</button></p>
+               <p><button type="button" class="btn btn-danger btn-xs" onClick="eliminar(<?= $equino['id_equino'] ?>)"><i class="fa fa-trash-o"></i> &nbsp; Eliminar publicación&nbsp;</button></p>
+                                     </div>
+                                 </div>
+                                 
+                                 <div class="Datainfo">
+                                    <span class="tt1"><?= $equino['nombre'] ?></span>
+                                    <span class="tt2">$<?= number_format($equino['precio'], 0, ',', '.') ?></span>
+                                    <span class="tt3"><strong>Publicado: </strong> <? $fecha=explode(' ', $equino['fecha_registro']); echo $fecha[0] ?></span>
+                                    <span class="tt4"><strong><i class="fa fa-user"></i> <?= $equino['visitas'] ?></strong> visitas</span>
+                                 </div>
+                             
+                             </div>
+                             
+                         </div>
+                     </li>
+                <?   } ?>     
+		       	 
+		       	 
+		       	</ul>
+		       </div>
+                              
+               </div>
+               
+		       <div class="tab-pane " id="finalizados">
+               
+               <div class="row">
+               
+		       	<ul class="row animated-area list-horses" id="finalizados_ul">
+		       	<? if(count($equinos_inactivos))
+				     foreach($equinos_inactivos as $equino)
+					 { ?>
+                     <li id="equinoOff<?= $equino['id_equino'] ?>" class="col-sm-4 animated" data-animation-delay="0.3s" data-animation="fadeIn">
+                         <div class="blog-post">
+                             <div class="ImageWrapper ContentWrapperLi">
+                                 <img class="img-responsive" src="<?=base_url()?>uploads/equinos/m<?= $equino['imagen'] ?>" alt="<?= $equino['nombre'] ?>">
+                                 <div class="ContentLi">
+                                     <div class="Content" style="text-align: center; width: 100%; padding-top: 12px; ">
+                <?= $equino['nombre'] ?><br>
+                <!-- <i class="fa fa-trash-o"></i> ICONOS EN http://fortawesome.github.io/Font-Awesome/icons/ -->
+               <p><a href="<?=base_url()?>index.php/equino/detalles/<?= $equino['id_equino'] ?>/<?= url_title($equino['nombre']) ?>" target="_blank"><button type="button" class="btn btn-info btn-xs"><i class="fa fa-plus"></i>  &nbsp; Ver publicación &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></a></p>
+               <p><a href="<?=base_url()?>index.php/equino/editar/<?= $equino['id_equino'] ?>/<?= url_title($equino['nombre']) ?>" ><button type="button" class="btn btn-success btn-xs"><i class="fa fa-pencil"></i> &nbsp; Editar publicación&nbsp;&nbsp;&nbsp;&nbsp;</button></a></p>
+               <p id="toogle<?= $equino['id_equino'] ?>"><button type="button" class="btn btn-alert btn-xs" onClick="activar(<?= $equino['id_equino'] ?>)"><i class="fa fa-warning"></i>  &nbsp; Activar publicación&nbsp;&nbsp;</button></p>
+               <p><button type="button" class="btn btn-warning btn-xs" onClick="finalizar(<?= $equino['id_equino'] ?>)"><i class="fa fa-warning"></i>  &nbsp; Finalizar publicación</button></p>
+               <p><button type="button" class="btn btn-danger btn-xs" onClick="eliminar(<?= $equino['id_equino'] ?>)"><i class="fa fa-trash-o"></i> &nbsp; Eliminar publicación&nbsp;</button></p>
+                                     </div>
+                                 </div>
+                                 
+                                 <div class="Datainfo">
+                                    <span class="tt1"><?= $equino['nombre'] ?></span>
+                                    <span class="tt2">$<?= number_format($equino['precio'], 0, ',', '.') ?></span>
+                                    <span class="tt3"><strong>Publicado: </strong> <? $fecha=explode(' ', $equino['fecha_registro']); echo $fecha[0] ?></span>
+                                    <span class="tt4"><strong><i class="fa fa-user"></i> <?= $equino['visitas'] ?></strong> visitas</span>
+                                 </div>
+                             
+                             </div>
+                             
+                         </div>
+                     </li>
+                <?   } ?>     
+                     
+		       	 
+		       	</ul>
+		       </div>
+		       	 	       	  
+               </div>
+		     
+             </div>
+		   </div>		
+		  </div>
+		  
+
+<script>
+	$('#myTab a').click(function (e) {
+	  e.preventDefault()
+	  $(this).tab('show')
+	})
+</script>
+		
+		  		
+	</div>	
+	</div>
+
+</div>
+</div>
+</section>

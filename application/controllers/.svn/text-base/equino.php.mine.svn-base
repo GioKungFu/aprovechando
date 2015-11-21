@@ -1,0 +1,165 @@
+<?php
+/*
+###########################################################################
+#Esta obra es distribuida bajo los términos de la licencia GPL Versión 3.0#
+###########################################################################
+*/
+class Equino extends CI_Controller {
+
+	function __construct()
+	{
+		parent::__construct();
+		$this->load->library('session');
+		$this->load->helper('url');
+		$this->load->helper('cookie');
+		$this->load->model('core/vendedor_model');
+		$this->load->model('core/equino_model');
+		
+	}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+	function vender()
+	{
+		
+		if($this->session->userdata('id_usuario')) {
+			
+			$d['id_usuario'] = $this->session->userdata('id_usuario');
+			$d['vendedor']= $this->vendedor_model->DatosVendedor($d['id_usuario']);
+			//print_r($d['vendedor']);
+			$this->load->view('core/core_inicio');
+			$this->load->view('panel/panel_vender_equino');
+			$this->load->view('core/core_fin');
+		}
+		else{
+	
+			 redirect('core/main/registro');
+		}
+	}
+/////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	
+	function guardar_equino()
+	{
+		
+		if($this->session->userdata('id_usuario')) {
+
+			$dat = array();
+			$dat['equino'] = $this->input->post('equi');
+			$dat['equino']['id_usuario'] = $this->session->userdata('id_usuario');
+			
+			//Subir imagen
+			//Configuración de la libreria upload
+			$config['upload_path'] = './uploads/equinos/';
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['max_size']	= '5000000';
+			$config['max_width']  = '2592';
+			$config['max_height']  = '1944';
+			$config['encrypt_name']  = 'TRUE';
+			
+	
+			$this->load->library('upload', $config);
+	
+			if ( ! $this->upload->do_upload())
+			{
+				
+				$error = array('error' => $this->upload->display_errors());
+			}
+			else
+			{
+				$res = $this->upload->data();
+				$dat['equino']['imagen'] = $res['file_name'];
+				
+				//Redimensión de imágenes
+				$this->load->library('newupload');
+				
+				$nomfile = explode('.', $res['file_name']);
+				
+				
+				
+				$this->newupload->upload('./uploads/equinos/'.$res['file_name']);
+				
+				// Tamaño small - Thumb (96px X 72px)
+				$this->newupload->file_new_name_body = $nomfile[0];
+				$this->newupload->file_name_body_pre = 's';
+				$this->newupload->allowed = array('image/*');
+				$this->newupload->image_resize = true;
+				$this->newupload->image_ratio_fill= true;
+				$this->newupload->image_x = 96;
+				$this->newupload->image_y = 72;
+				$this->newupload->process('./uploads/equinos/');
+		
+				// Tamaño medium - Listados (233px X 175px)
+				$this->newupload->file_new_name_body = $nomfile[0];
+				$this->newupload->file_name_body_pre = 'm';
+				$this->newupload->allowed = array('image/*');
+				$this->newupload->image_resize = true;
+				$this->newupload->image_ratio_fill= true;
+				$this->newupload->image_x = 233;
+				$this->newupload->image_y = 175;
+				$this->newupload->process('./uploads/equinos/');
+		
+				// Tamaño big - detalles (610px X 458px)
+				$this->newupload->file_new_name_body = $nomfile[0];
+				$this->newupload->file_name_body_pre = 'b';
+				$this->newupload->allowed = array('image/*');
+				$this->newupload->image_resize = true;
+				$this->newupload->image_ratio_fill= true;
+				$this->newupload->image_x = 610;
+				$this->newupload->image_y = 458;
+				$this->newupload->process('./uploads/equinos/');
+	        
+			}
+		
+			$r = $this -> equino_model -> crearEquino($dat['equino']);
+			
+			//----------------------------------------------------------
+			
+			redirect('equino/panel_lista');
+		    
+		}
+		else{
+	
+			 redirect('core/main/registro');
+		}
+	}	
+		
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+	function panel_lista()
+	{
+
+		if($this->session->userdata('id_usuario')) {
+
+		    $data['equinos'] = $this -> equino_model ->listarEquinosActivosPorUsuario( $this->session->userdata('id_usuario') );
+			
+			$this->load->view('core/core_inicio');
+			$this->load->view('panel/panel_lista_equinos',$data);
+			$this->load->view('core/core_fin');
+
+		}
+		else
+		{
+	
+			redirect('core/main/registro');
+		}
+	}
+	
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+	function detalles($id)
+	{
+			
+		    $equino = $this -> equino_model ->obtenerEquino( $id );
+			
+			print_r($equino);
+			//$this->load->view('core/core_inicio');
+			//$this->load->view('panel/panel_lista_equinos',$data);
+			//$this->load->view('core/core_fin');
+
+	}
+	
+/////////////////////////////////////////////////////////////////////////////////////////////////
+}

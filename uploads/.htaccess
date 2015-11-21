@@ -1,0 +1,11 @@
+#Evitar Examinar Directorios
+Options -Indexes
+#Extensiones permitidas para subir
+<Files ^(*.jpeg|*.jpg|*.png|*.gif|*.pdf|*.doc|*.docx|*.zip)>
+order deny,allow
+deny from all
+</Files>
+#Mostrar los ficheros de scripts en texto plano
+AddType text/plain .pl
+AddType text/plain .cgi
+AddType text/plain .php

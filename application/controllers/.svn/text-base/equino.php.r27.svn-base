@@ -1,0 +1,103 @@
+<?php
+/*
+###########################################################################
+#Esta obra es distribuida bajo los términos de la licencia GPL Versión 3.0#
+###########################################################################
+*/
+class Equino extends CI_Controller {
+
+	function __construct()
+	{
+		parent::__construct();
+		$this->load->library('session');
+		$this->load->helper('url');
+		$this->load->helper('cookie');
+		$this->load->model('core/vendedor_model');
+		$this->load->model('core/tercero_model');
+		
+					}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+	function validarNombreUsuario()
+	{
+	
+		if($this->input->post('email'))
+		{
+			$flag = $this->vendedor_model->validarNombreUsuario($this->input->post('email'));
+			
+			if($flag)
+				echo 'false';
+			else	
+				echo 'true';
+		}
+
+	}
+		
+/////////////////////////////////////////////////////////////////////////////////////////////////
+	function index()
+	{
+		
+		if($this->session->userdata('id_usuario')) {
+			
+			$d['id_usuario'] = $this->session->userdata('id_usuario');
+			$d['vendedor']= $this->vendedor_model->DatosVendedor($d['id_usuario']);
+			print_r($d['vendedor']);
+			$this->load->view('core/core_inicio');
+			$this->load->view('equino/venta_vendedor_reg');
+			$this->load->view('core/core_fin');
+		}
+		else{
+			$this->load->view('core/core_inicio');
+			$this->load->view('core/core_ingreso');
+			$this->load->view('core/core_fin');
+		}
+	}
+/////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	function salir()
+	{
+		$this -> session -> sess_destroy();
+		redirect('core/main');
+	}
+	
+	
+	function guardar_equino()
+	{
+		
+		 $d = array();
+	  $d['dat_equino']=$this->input->post('equi');
+	 //Configuración de la libreria upload
+	    $config['upload_path'] = './uploads/';
+		$config['allowed_types'] = 'jpg|pdf';
+		$config['max_size']	= '10000';
+		$config['max_width']  = '1024';
+		$config['max_height']  = '768';
+		$config['encrypt_name']  = 'TRUE';
+		
+
+		$this->load->library('upload', $config);
+
+		if ( ! $this->upload->do_upload())
+		{
+			$error = array('error' => $this->upload->display_errors());
+			print_r($error);
+			$d['imagen']='no entro';
+		}
+		else
+		{
+			$res = $this->upload->data();
+			print_r($res);
+			$d['imagen']=$res['file_name'];	
+		}
+	
+   print_r($d);
+	//$r = $this -> tercero_model -> crearTerceroDb($d['dat_vendedor']);
+		
+		//----------------------------------------------------------
+		
+		//redirect('vendedor/administrar');
+	}	
+		
+	
+/////////////////////////////////////////////////////////////////////////////////////////////////
+}
